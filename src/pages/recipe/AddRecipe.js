@@ -12,7 +12,7 @@ class AddRecipe extends React.Component {
             servings: 0,
             type: "main",
             source: "",
-            ingredients: [{name: "", quantity: "", unit: ""}]
+            ingredients: [{name: "", quantity: "", unit: "#"}]
         }
     }
 
@@ -79,6 +79,8 @@ class AddRecipe extends React.Component {
                                   value={this.state.servings}/>
                 </Form.Group>
 
+                <Form.Label>Ingredients</Form.Label>
+
                 {
                     this.state.ingredients.map((ingredientObj, index) =>
                         <Form.Group key={index}>
@@ -98,10 +100,10 @@ class AddRecipe extends React.Component {
                                                   value={this.state.ingredients[index].quantity}/>
                                 </Col>
                                 <Col xs={2}>
-                                    <Form.Select>
+                                    <Form.Select onChange={(event) => this.handleInputChangeIngredient(event, index)}>
                                         {
                                             units.map((unit) =>
-                                                <option key={`${index}-${unit}`}>{unit}</option>
+                                                <option key={`${index}-${unit}`} value={unit}>{unit}</option>
                                             )
                                         }
                                     </Form.Select>
@@ -110,6 +112,18 @@ class AddRecipe extends React.Component {
                         </Form.Group>
                     )
                 }
+
+                <Button variant="secondary" onClick={() => {
+                    this.setState((prevState) => {
+                        const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
+                        ingredients.push({name: "", quantity: "", unit: "#"});
+                        return {
+                            ingredients: ingredients
+                        };
+                    });
+                }}>
+                    Add Ingredient
+                </Button>
 
                 <Button variant="primary" onClick={() => console.log(this.state)}>
                     Add Recipe
