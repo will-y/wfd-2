@@ -6,7 +6,7 @@ import RecipeList from "./pages/recipe/RecipeList";
 function App() {
   return (
     <div className="App">
-      <RecipeList />
+      <AddRecipe />
     </div>
   );
 }
