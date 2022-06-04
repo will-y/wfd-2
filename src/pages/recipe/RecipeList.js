@@ -26,6 +26,24 @@ class RecipeList extends React.Component {
         });
     }
 
+    handleRecipeExpandClicked = (id) => {
+        this.setState(prevState => {
+            const prevActive = JSON.parse(JSON.stringify(prevState.activeRecipes));
+            if (prevActive.includes(id)) {
+                const index = prevActive.indexOf(id);
+                if (index !== -1) {
+                    prevActive.splice(index, 1);
+                }
+            } else {
+                prevActive.push(id);
+            }
+
+            return {
+                activeRecipes: prevActive
+            }
+        });
+    }
+
     render() {
         return (
             <div className="m-2">
@@ -41,16 +59,33 @@ class RecipeList extends React.Component {
                                     <p className="text-end">{data.servings} Servings</p>
                                 </Col>
                             </Row>
-                            <p>{data.servings}</p>
-                            <ul>
-                                {
-                                    data.ingredients.map((ing, index) => {
-                                        return (
-                                            <li key={`${id}-${index}`}>{`${ing.name} (${ing.quantity} ${ing.unit})`}</li>
-                                        )
-                                    })
+                            {this.state.activeRecipes.includes(id) ?
+                                <div>
+                                    <p>Ingredients</p>
+                                    <ul>
+                                        {
+                                            data.ingredients.map((ing, index) => {
+                                                return (
+                                                    <li key={`${id}-${index}`}>{`${ing.name} (${ing.quantity} ${ing.unit})`}</li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </div> : <div></div>
+                            }
+                            <Row onClick={() => this.handleRecipeExpandClicked(id)}>
+                                {this.state.activeRecipes.includes(id) ?
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         className="bi bi-chevron-up" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd"
+                                              d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                                    </svg> :
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         className="bi bi-chevron-down" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
                                 }
-                            </ul>
+                            </Row>
                         </div>
                     );
                 })}
