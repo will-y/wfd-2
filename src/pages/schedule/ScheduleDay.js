@@ -29,9 +29,7 @@ class ScheduleDay extends React.Component {
                             </Row>
                         </Col>
                     </Row>
-
                 </div>
-
             </div>
         );
     }

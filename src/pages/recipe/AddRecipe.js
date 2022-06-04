@@ -1,5 +1,7 @@
 import {Button, Col, Form, Row} from "react-bootstrap";
 import React from "react";
+import database from "../../firebase";
+import { ref, push, set, get, onValue } from "firebase/database";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
 
@@ -38,6 +40,22 @@ class AddRecipe extends React.Component {
                 ingredients: ingredients
             };
         });
+    }
+
+    handleAddRecipe = () => {
+        const recipesRef = ref(database, "test/recipes");
+
+        const newRecipeRef = push(recipesRef);
+
+        const obj = {
+            name: this.state.name,
+            servings: this.state.servings,
+            type: this.state.type,
+            source: this.state.source,
+            ingredients: this.state.ingredients
+        }
+
+        set(newRecipeRef, obj).then(() => console.log("Recipe Written To Database"));
     }
 
     render = () => {
@@ -125,7 +143,7 @@ class AddRecipe extends React.Component {
                     Add Ingredient
                 </Button>
 
-                <Button variant="primary" onClick={() => console.log(this.state)}>
+                <Button variant="primary" onClick={() => this.handleAddRecipe()}>
                     Add Recipe
                 </Button>
             </Form>

@@ -5,7 +5,7 @@ import Schedule from "./pages/schedule/Schedule";
 function App() {
   return (
     <div className="App">
-      <Schedule />
+      <AddRecipe />
     </div>
   );
 }
