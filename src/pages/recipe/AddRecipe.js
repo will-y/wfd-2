@@ -55,6 +55,8 @@ class AddRecipe extends React.Component {
             ingredients: this.state.ingredients
         }
 
+        console.log(obj);
+
         set(newRecipeRef, obj).then(() => console.log("Recipe Written To Database"));
     }
 
@@ -118,7 +120,7 @@ class AddRecipe extends React.Component {
                                                   value={this.state.ingredients[index].quantity}/>
                                 </Col>
                                 <Col xs={2}>
-                                    <Form.Select onChange={(event) => this.handleInputChangeIngredient(event, index)}>
+                                    <Form.Select name="unit" onChange={(event) => this.handleInputChangeIngredient(event, index)}>
                                         {
                                             units.map((unit) =>
                                                 <option key={`${index}-${unit}`} value={unit}>{unit}</option>

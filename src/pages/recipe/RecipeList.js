@@ -2,13 +2,15 @@ import React from "react";
 import database from "../../firebase";
 import {onValue, ref} from "firebase/database";
 import "./Recipe.css"
+import {Col, Row} from "react-bootstrap";
 
 class RecipeList extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            recipes: {}
+            recipes: {},
+            activeRecipes: []
         }
     }
 
@@ -30,15 +32,19 @@ class RecipeList extends React.Component {
                 {Object.keys(this.state.recipes).map((id) => {
                     const data = this.state.recipes[id];
                     return (
-                        <div key={id} className="recipe-list-instance mb-1 p-2">
-                            <p>{data.name}</p>
-                            <p>{data.source}</p>
+                        <div key={id} className={`recipe-list-instance mb-1 p-2 ${data.type}`}>
+                            <Row>
+                                <Col xs={6}>
+                                    <p>{data.name}</p>
+                                </Col>
+                                <Col xs={6}>
+                                    <p className="text-end">{data.servings} Servings</p>
+                                </Col>
+                            </Row>
                             <p>{data.servings}</p>
-                            <p>{data.type}</p>
                             <ul>
                                 {
                                     data.ingredients.map((ing, index) => {
-                                        console.log(ing)
                                         return (
                                             <li key={`${id}-${index}`}>{`${ing.name} (${ing.quantity} ${ing.unit})`}</li>
                                         )

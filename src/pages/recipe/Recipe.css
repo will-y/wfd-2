@@ -1,3 +1,20 @@
 .recipe-list-instance {
     border: 1px solid black;
 }
+
+.main {
+    background-color: blue;
+    color: white;
+}
+
+.side {
+    background-color: orange;
+}
+
+.desert {
+    background-color: chartreuse;
+}
+
+.drink {
+    background-color: pink;
+}
