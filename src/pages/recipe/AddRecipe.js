@@ -145,7 +145,7 @@ class AddRecipe extends React.Component {
                         </Form.Group>
                     )
                 }
-                <Row>
+                <Row className="g-1 mt-1">
                     <Button variant="secondary" className="mb-2" onClick={() => {
                         this.setState((prevState) => {
                             const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
@@ -168,7 +168,7 @@ class AddRecipe extends React.Component {
                 {
                     this.state.steps.map((step, index) =>
                         <Form.Group key={index}>
-                            <Row>
+                            <Row className="g-1">
                                 <Form.Control type="text"
                                               placeholder={`Step ${index + 1}`}
                                               onChange={(event) => this.handleInputChangeStep(event, index)}
@@ -177,7 +177,7 @@ class AddRecipe extends React.Component {
                         </Form.Group>
                     )
                 }
-                <Row>
+                <Row className="g-1 mt-1">
                     <Button variant="secondary" className="mb-2" onClick={() => {
                         this.setState((prevState) => {
                             const steps = JSON.parse(JSON.stringify(prevState.steps));
