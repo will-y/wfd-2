@@ -66,7 +66,8 @@ class AddRecipe extends React.Component {
             servings: this.state.servings,
             type: this.state.type,
             source: this.state.source,
-            ingredients: this.state.ingredients
+            ingredients: this.state.ingredients,
+            steps: this.state.steps
         }
 
         set(newRecipeRef, obj).then(() => console.log("Recipe Written To Database"));
