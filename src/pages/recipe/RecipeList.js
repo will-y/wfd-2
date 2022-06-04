@@ -61,16 +61,31 @@ class RecipeList extends React.Component {
                             </Row>
                             {this.state.activeRecipes.includes(id) ?
                                 <div>
+                                    {data.source ?
+                                        <p>Source: {(data.source.includes("https://") || data.source.includes("http://")) ? <a href={data.source} target="_blank">{data.source}</a> : <>{data.source}</>}</p> : <></>
+                                    }
+
                                     <p>Ingredients</p>
                                     <ul>
                                         {
                                             data.ingredients.map((ing, index) => {
+                                                const unit = ing.unit === "#" ? "" : " " + ing.unit;
                                                 return (
-                                                    <li key={`${id}-${index}`}>{`${ing.name} (${ing.quantity} ${ing.unit})`}</li>
+                                                    <li key={`${id}-${index}`}>{`${ing.name} (${ing.quantity}${unit})`}</li>
                                                 )
                                             })
                                         }
                                     </ul>
+                                    <p>Steps</p>
+                                    <ol>
+                                        {
+                                            data.steps.map((step, index) => {
+                                                return (
+                                                    <li key={`${id}-${index}`}>{step}</li>
+                                                )
+                                            })
+                                        }
+                                    </ol>
                                 </div> : <div></div>
                             }
                             <Row onClick={() => this.handleRecipeExpandClicked(id)}>
