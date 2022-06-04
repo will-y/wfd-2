@@ -2,7 +2,7 @@ import React from "react";
 import database from "../../firebase";
 import {onValue, ref} from "firebase/database";
 import "./Recipe.css"
-import {Col, Row} from "react-bootstrap";
+import {Col, FormControl, Row} from "react-bootstrap";
 
 const categoryOrder = {
     "main": 0,
@@ -17,6 +17,7 @@ class RecipeList extends React.Component {
 
         this.state = {
             recipes: [],
+            filteredRecipes: [],
             activeRecipes: []
         }
     }
@@ -39,7 +40,7 @@ class RecipeList extends React.Component {
                 dataList.sort((a, b) => {
                     if (categoryOrder[a.type] < categoryOrder[b.type]) {
                         return -1;
-                    } else if (categoryOrder[a.type] == categoryOrder[b.type]) {
+                    } else if (categoryOrder[a.type] === categoryOrder[b.type]) {
                         return a.name.localeCompare(b.name);
                     } else {
                         return 1;
@@ -47,7 +48,8 @@ class RecipeList extends React.Component {
                 });
 
                 this.setState({
-                    recipes: dataList
+                    recipes: dataList,
+                    filteredRecipes: JSON.parse(JSON.stringify(dataList))
                 });
             }
         });
@@ -71,10 +73,32 @@ class RecipeList extends React.Component {
         });
     }
 
+    handleSearchChanged = (event) => {
+        const value = event.target.value;
+
+        if (value === "") {
+            this.setState(prevState => {
+                return {
+                    filteredRecipes: JSON.parse(JSON.stringify(prevState.recipes))
+                };
+            });
+        } else {
+            const filtered = this.state.recipes.filter(val => {
+                return val.name.toLowerCase().includes(value.toLowerCase());
+            });
+            this.setState(prevState => {
+                return {
+                    filteredRecipes: filtered
+                };
+            });
+        }
+    }
+
     render() {
         return (
             <div className="m-2">
-                {this.state.recipes.map((recipe) => {
+                <FormControl placeholder="Search" className="mb-1" onChange={this.handleSearchChanged}/>
+                {this.state.filteredRecipes.map((recipe) => {
                     const data = recipe;
                     return (
                         <div key={recipe.key} className={`recipe-list-instance mb-1 p-2 ${data.type}`}>
