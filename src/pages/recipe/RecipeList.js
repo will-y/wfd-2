@@ -46,8 +46,6 @@ class RecipeList extends React.Component {
                     }
                 });
 
-                console.log(dataList)
-
                 this.setState({
                     recipes: dataList
                 });
