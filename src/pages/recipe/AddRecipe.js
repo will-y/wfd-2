@@ -98,7 +98,7 @@ class AddRecipe extends React.Component {
                     <Form.Select name="type" onChange={this.handleInputChange} value={this.state.type}>
                         <option value="main">Main Course</option>
                         <option value="side">Side Item</option>
-                        <option value="desert">Desert</option>
+                        <option value="dessert">Dessert</option>
                         <option value="drink">Drink</option>
                     </Form.Select>
                 </Form.Group>

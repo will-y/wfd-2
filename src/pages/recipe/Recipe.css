@@ -3,7 +3,7 @@
 }
 
 .main {
-    background-color: blue;
+    background-color: #a43232;
     color: white;
 }
 
@@ -11,10 +11,10 @@
     background-color: orange;
 }
 
-.desert {
-    background-color: chartreuse;
+.dessert {
+    background-color: #e279bd;
 }
 
 .drink {
-    background-color: pink;
+    background-color: #ff7500;
 }
