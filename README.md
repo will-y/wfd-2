@@ -8,6 +8,5 @@ This app is for keeping track of recipes and eating schedules.
 - Recipes on the schedule are not sorted correctly
 - No way to remove recipes
 - No way to edit recipes
-- Can only view 7 days
 - No authentication
 - Reloading on a page causes 404???
