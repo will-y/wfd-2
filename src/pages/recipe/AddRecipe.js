@@ -146,7 +146,15 @@ class AddRecipeClass extends React.Component {
                                     </Form.Select>
                                 </Col>
                                 <Col xs={1}>
-                                    <Button variant="secondary" className="w-100">
+                                    <Button variant="secondary" className="w-100" onClick={() => {
+                                        this.setState((prevState) => {
+                                            const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
+                                            ingredients.splice(index, 1);
+                                            return {
+                                                ingredients: ingredients
+                                            };
+                                        });
+                                    }}>
                                         X
                                     </Button>
                                 </Col>
@@ -188,7 +196,15 @@ class AddRecipeClass extends React.Component {
                                 </Form.Group>
                             </Col>
                             <Col xs={1}>
-                                <Button variant="secondary" className="w-100">
+                                <Button variant="secondary" className="w-100" onClick={() => {
+                                    this.setState((prevState) => {
+                                        const steps = JSON.parse(JSON.stringify(prevState.steps));
+                                        steps.splice(index, 1);
+                                        return {
+                                            steps: steps
+                                        };
+                                    });
+                                }}>
                                     X
                                 </Button>
                             </Col>
