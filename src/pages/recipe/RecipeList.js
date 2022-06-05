@@ -99,7 +99,7 @@ class RecipeList extends React.Component {
         // If it comes from a day, clicking can add
         if (this.props.date) {
             const date = this.props.date;
-            const scheduleDayRef = ref(database, "test/schedule/" + date);
+            const scheduleDayRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + date);
 
             const newEntryRef = push(scheduleDayRef);
 
