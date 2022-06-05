@@ -11,27 +11,17 @@ class Schedule extends React.Component {
         const date = new Date();
         return (
             <Row className="g-1 m-2">
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
-                <Col md>
-                    <ScheduleDay day={weekday[date.getDay()]} date={date.getDate()} month={monthNames[date.getMonth()]} year={date.getFullYear()}/>
-                </Col>
+                {
+                    Array.from(Array(7).keys()).map((i) => {
+                        const newDate = new Date();
+                        newDate.setDate(date.getDate() + i);
+                        return (
+                            <Col lg={3}>
+                                <ScheduleDay day={weekday[newDate.getDay()]} date={newDate.getDate()} month={monthNames[newDate.getMonth()]} year={newDate.getFullYear()}/>
+                            </Col>
+                        );
+                    })
+                }
             </Row>
         );
     }
