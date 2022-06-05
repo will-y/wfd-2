@@ -14,6 +14,9 @@ function App() {
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                   <Navbar.Collapse id="basic-navbar-nav">
                       <Nav className="me-auto">
+                          <LinkContainer to="/">
+                              <Nav.Link>Schedule</Nav.Link>
+                          </LinkContainer>
                           <LinkContainer to="/recipes">
                               <Nav.Link>Recipes</Nav.Link>
                           </LinkContainer>
