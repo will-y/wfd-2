@@ -9,3 +9,5 @@ This app is for keeping track of recipes and eating schedules.
 - No way to remove recipes
 - No way to edit recipes
 - Can't undo adding an ingredient or step form element
+- Can only view 7 days
+- No authentication
