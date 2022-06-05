@@ -57,7 +57,7 @@ class AddRecipe extends React.Component {
     }
 
     handleAddRecipe = () => {
-        const recipesRef = ref(database, "test/recipes");
+        const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         const newRecipeRef = push(recipesRef);
 

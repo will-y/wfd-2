@@ -24,7 +24,7 @@ class RecipeList extends React.Component {
     }
 
     componentDidMount() {
-        const recipeRef = ref(database, "test/recipes");
+        const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         onValue(recipeRef, (snapshot) => {
             if (snapshot.exists()) {

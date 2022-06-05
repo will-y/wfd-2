@@ -19,8 +19,8 @@ class ScheduleDay extends React.Component {
     }
 
     componentDidMount() {
-        const scheduleRef = ref(database, "test/schedule/" + this.state.dateString);
-        const recipesRef = ref(database, "test/recipes");
+        const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + this.state.dateString);
+        const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         get(recipesRef).then((snapshot) => {
             if (snapshot.exists()) {
