@@ -121,8 +121,8 @@ class AddRecipeClass extends React.Component {
                 {
                     this.state.ingredients.map((ingredientObj, index) =>
                         <Form.Group key={index}>
-                            <Row className="g-1">
-                                <Col xs={8}>
+                            <Row className="g-1 mt-1">
+                                <Col xs={7}>
                                     <Form.Control type="text"
                                                   placeholder={`Ingredient ${index + 1}`}
                                                   name="name"
@@ -144,6 +144,11 @@ class AddRecipeClass extends React.Component {
                                             )
                                         }
                                     </Form.Select>
+                                </Col>
+                                <Col xs={1}>
+                                    <Button variant="secondary" className="w-100">
+                                        X
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form.Group>
@@ -171,14 +176,23 @@ class AddRecipeClass extends React.Component {
 
                 {
                     this.state.steps.map((step, index) =>
-                        <Form.Group key={index}>
-                            <Row className="g-1">
-                                <Form.Control type="text"
-                                              placeholder={`Step ${index + 1}`}
-                                              onChange={(event) => this.handleInputChangeStep(event, index)}
-                                              value={this.state.steps[index]}/>
-                            </Row>
-                        </Form.Group>
+                        <Row key={index} className="g-1 mt-1">
+                            <Col xs={11}>
+                                <Form.Group>
+                                    <Row className="g-1">
+                                        <Form.Control type="text"
+                                                      placeholder={`Step ${index + 1}`}
+                                                      onChange={(event) => this.handleInputChangeStep(event, index)}
+                                                      value={this.state.steps[index]}/>
+                                    </Row>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={1}>
+                                <Button variant="secondary" className="w-100">
+                                    X
+                                </Button>
+                            </Col>
+                        </Row>
                     )
                 }
                 <Row className="g-1 mt-1">
