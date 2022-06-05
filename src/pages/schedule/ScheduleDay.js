@@ -2,6 +2,9 @@ import React from "react";
 import "./Schedule.css";
 import {Button, Col, Row} from "react-bootstrap";
 import RecipeListPopover from "../recipe/RecipeListPopover";
+import database from "../../firebase";
+import {onValue, ref, get} from "firebase/database";
+import RecipeListEntry from "../recipe/RecipeListEntry";
 
 class ScheduleDay extends React.Component {
     constructor(props) {
@@ -9,8 +12,58 @@ class ScheduleDay extends React.Component {
 
         this.state = {
             modalShow: false,
-            dateString: `${this.props.month}-${this.props.date}-${this.props.year}`
+            dateString: `${this.props.month}-${this.props.date}-${this.props.year}`,
+            recipes: [],
+            activeRecipes: []
         }
+    }
+
+    componentDidMount() {
+        const scheduleRef = ref(database, "test/schedule/" + this.state.dateString);
+        const recipesRef = ref(database, "test/recipes");
+
+        get(recipesRef).then((snapshot) => {
+            const recipes = snapshot.val();
+
+            onValue(scheduleRef, (snapshot) => {
+                const schedule = snapshot.val();
+                this.setState({
+                    recipes: this.getRecipes(recipes, schedule)
+                });
+            });
+        });
+    }
+
+    getRecipes(recipes, schedule) {
+        return Object.values(schedule).map(scheduleEntry => {
+            const recipe = this.scaleRecipe(recipes[scheduleEntry.id], scheduleEntry.scaleFactor);
+            recipe.key = scheduleEntry.id;
+            return recipe;
+        });
+    }
+
+    scaleRecipe(recipe, scaleFactor) {
+        // TODO
+        return recipe;
+    }
+
+    // TODO: lot of copied code
+    handleRecipeExpandClicked = (id) => {
+        this.setState(prevState => {
+            const prevActive = JSON.parse(JSON.stringify(prevState.activeRecipes));
+            if (prevActive.includes(id)) {
+                const index = prevActive.indexOf(id);
+                if (index !== -1) {
+                    prevActive.splice(index, 1);
+                }
+            } else {
+                prevActive.push(id);
+            }
+
+            return {
+                activeRecipes: prevActive
+            }
+        });
     }
 
     render() {
@@ -19,20 +72,15 @@ class ScheduleDay extends React.Component {
                 <div className="p-3">
                     <p>{this.props.day}</p>
                     <p>{this.props.month} {this.props.date}</p>
-                    <Row>
+                    <Row className="mb-5">
                         <Col>
-                            <Row className="day-recipe mb-2">
-                                <Col sm={8}>Test Recipe Name</Col>
-                                <Col sm={4}>Servings: 10</Col>
-                            </Row>
-                            <Row className="day-recipe mb-2">
-                                <Col sm={8}>Test Recipe Name</Col>
-                                <Col sm={4}>Servings: 10</Col>
-                            </Row>
-                            <Row className="day-recipe mb-2">
-                                <Col sm={8}>Test Recipe Name</Col>
-                                <Col sm={4}>Servings: 10</Col>
-                            </Row>
+                            {
+                                this.state.recipes.map(recipe => {
+                                    return (<RecipeListEntry recipe={recipe}
+                                                             key={recipe.key} activeRecipes={this.state.activeRecipes}
+                                                             handleRecipeExpandClicked={this.handleRecipeExpandClicked}/>);
+                                })
+                            }
                         </Col>
                     </Row>
                 </div>

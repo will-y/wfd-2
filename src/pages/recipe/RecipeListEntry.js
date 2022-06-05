@@ -5,7 +5,7 @@ class RecipeListEntry extends React.Component {
     render() {
         const recipe = this.props.recipe;
         return (
-            <div key={recipe.key} className={`recipe-list-instance mb-1 p-2 ${recipe.type}`} onClick={this.props.onClick}>
+            <div className={`recipe-list-instance mb-1 p-2 ${recipe.type}`} onClick={this.props.onClick}>
                 <Row>
                     <Col xs={6}>
                         <p className="mb-0">{recipe.name}</p>
