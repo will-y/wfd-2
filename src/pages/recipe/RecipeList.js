@@ -1,8 +1,8 @@
 import React from "react";
 import database from "../../firebase";
-import {onValue, ref} from "firebase/database";
+import {onValue, push, ref, set} from "firebase/database";
 import "./Recipe.css"
-import {Col, FormControl, Row} from "react-bootstrap";
+import { FormControl } from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
 
 const categoryOrder = {
@@ -95,6 +95,18 @@ class RecipeList extends React.Component {
         }
     }
 
+    handleAddRecipeToDay = (recipeId) => {
+        // If it comes from a day, clicking can add
+        if (this.props.date) {
+            const date = this.props.date;
+            const scheduleDayRef = ref(database, "test/schedule/" + date);
+
+            const newEntryRef = push(scheduleDayRef);
+
+            set(newEntryRef, recipeId).then(() => console.log("Schedule Written To Database"));
+        }
+    }
+
     render() {
         return (
             <div className="m-2">
@@ -104,8 +116,8 @@ class RecipeList extends React.Component {
                         <RecipeListEntry recipe={recipe}
                                          activeRecipes={this.state.activeRecipes}
                                          handleRecipeExpandClicked={this.handleRecipeExpandClicked}
-                                         hideArrows={this.props.hideArrow}
-                                         key={recipe.key}/>
+                                         hideArrow={this.props.hideArrow}
+                                         key={recipe.key} onClick={() => this.handleAddRecipeToDay(recipe.key)}/>
                     );
                 })}
             </div>

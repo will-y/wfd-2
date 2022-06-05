@@ -4,9 +4,6 @@ import "./Recipe.css";
 import RecipeList from "./RecipeList";
 
 class RecipeListPopover extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -17,11 +14,11 @@ class RecipeListPopover extends React.Component {
                 centered dialogClassName="modal-90w">
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Add Recipe to Day
+                        Add Recipe to {this.props.date.replace(/-/g, ' ')}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RecipeList hideArrow={true}/>
+                    <RecipeList hideArrow={true} date={this.props.date}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Cancel</Button>

@@ -8,7 +8,8 @@ class ScheduleDay extends React.Component {
         super(props);
 
         this.state = {
-            modalShow: false
+            modalShow: false,
+            dateString: `${this.props.month}-${this.props.date}-${this.props.year}`
         }
     }
 
@@ -35,7 +36,9 @@ class ScheduleDay extends React.Component {
                         </Col>
                     </Row>
                 </div>
-                <RecipeListPopover show={this.state.modalShow} onHide={() => this.setState({modalShow: false})}/>
+                <RecipeListPopover show={this.state.modalShow}
+                                   onHide={() => this.setState({modalShow: false})}
+                                   date={this.state.dateString}/>
                 <Button variant="success"
                         className="add-recipe-button"
                         onClick={() => this.setState({modalShow: true})}>

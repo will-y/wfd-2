@@ -1,7 +1,7 @@
 import {Button, Col, Form, Row} from "react-bootstrap";
 import React from "react";
 import database from "../../firebase";
-import { ref, push, set, get, onValue } from "firebase/database";
+import { ref, push, set } from "firebase/database";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
 
