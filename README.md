@@ -11,4 +11,3 @@ This app is for keeping track of recipes and eating schedules.
 - Can't undo adding an ingredient or step form element
 - Can only view 7 days
 - No authentication
-- Add recipe form should have a popup or go to another page and reset form

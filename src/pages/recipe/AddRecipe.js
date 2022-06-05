@@ -2,10 +2,11 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import React from "react";
 import database from "../../firebase";
 import { ref, push, set } from "firebase/database";
+import {useNavigate} from "react-router-dom";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
 
-class AddRecipe extends React.Component {
+class AddRecipeClass extends React.Component {
     constructor(props) {
         super(props);
 
@@ -70,7 +71,10 @@ class AddRecipe extends React.Component {
             steps: this.state.steps
         }
 
-        set(newRecipeRef, obj).then(() => console.log("Recipe Written To Database"));
+        set(newRecipeRef, obj).then(() => {
+            console.log("Recipe Written To Database");
+            this.props.navigate("/recipes");
+        });
     }
 
     render = () => {
@@ -201,6 +205,12 @@ class AddRecipe extends React.Component {
             </Form>
         );
     }
+}
+
+const AddRecipe = props => {
+    const nav = useNavigate();
+
+    return <AddRecipeClass navigate={nav} {...props} />
 }
 
 export default AddRecipe;
