@@ -16,8 +16,11 @@ class Schedule extends React.Component {
                         const newDate = new Date();
                         newDate.setDate(date.getDate() + i);
                         return (
-                            <Col lg={3}>
-                                <ScheduleDay day={weekday[newDate.getDay()]} date={newDate.getDate()} month={monthNames[newDate.getMonth()]} year={newDate.getFullYear()}/>
+                            <Col lg={3} key={i}>
+                                <ScheduleDay day={weekday[newDate.getDay()]}
+                                             date={newDate.getDate()}
+                                             month={monthNames[newDate.getMonth()]}
+                                             year={newDate.getFullYear()}/>
                             </Col>
                         );
                     })

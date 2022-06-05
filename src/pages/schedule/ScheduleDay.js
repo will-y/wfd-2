@@ -23,14 +23,18 @@ class ScheduleDay extends React.Component {
         const recipesRef = ref(database, "test/recipes");
 
         get(recipesRef).then((snapshot) => {
-            const recipes = snapshot.val();
+            if (snapshot.exists()) {
+                const recipes = snapshot.val();
 
-            onValue(scheduleRef, (snapshot) => {
-                const schedule = snapshot.val();
-                this.setState({
-                    recipes: this.getRecipes(recipes, schedule)
+                onValue(scheduleRef, (snapshot2) => {
+                    if (snapshot2.exists()) {
+                        const schedule = snapshot2.val();
+                        this.setState({
+                            recipes: this.getRecipes(recipes, schedule)
+                        });
+                    }
                 });
-            });
+            }
         });
     }
 
