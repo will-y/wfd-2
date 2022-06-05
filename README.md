@@ -10,3 +10,4 @@ This app is for keeping track of recipes and eating schedules.
 - No way to edit recipes
 - Can only view 7 days
 - No authentication
+- Reloading on a page causes 404???
