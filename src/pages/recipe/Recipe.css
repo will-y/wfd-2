@@ -23,3 +23,7 @@
     width: 90%;
     max-width: unset;
 }
+
+.link-svg {
+    margin-top: 6px;
+}
