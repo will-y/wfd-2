@@ -103,7 +103,14 @@ class RecipeList extends React.Component {
 
             const newEntryRef = push(scheduleDayRef);
 
-            set(newEntryRef, recipeId).then(() => console.log("Schedule Written To Database"));
+            const obj = {
+                id: recipeId,
+                scaleFactor: 1
+            };
+
+            set(newEntryRef, obj).then(() => console.log("Schedule Written To Database"));
+
+            this.props.onHide();
         }
     }
 
