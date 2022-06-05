@@ -18,3 +18,8 @@
 .drink {
     background-color: #ff7500;
 }
+
+.modal-90w {
+    width: 90%;
+    max-width: unset;
+}

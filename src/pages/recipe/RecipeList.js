@@ -104,10 +104,10 @@ class RecipeList extends React.Component {
                         <div key={recipe.key} className={`recipe-list-instance mb-1 p-2 ${data.type}`}>
                             <Row>
                                 <Col xs={6}>
-                                    <p>{data.name}</p>
+                                    <p className="mb-0">{data.name}</p>
                                 </Col>
                                 <Col xs={6}>
-                                    <p className="text-end">{data.servings} Servings</p>
+                                    <p className="text-end mb-0">{data.servings} Servings</p>
                                 </Col>
                             </Row>
                             {this.state.activeRecipes.includes(recipe.key) ?
