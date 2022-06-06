@@ -96,7 +96,18 @@ class RecipeList extends React.Component {
                 scaleFactor: 1
             };
 
-            set(newEntryRef, obj).then(() => console.log("Schedule Written To Database"));
+            onValue(scheduleDayRef, snapshot => {
+                if (snapshot.exists()) {
+                    const value = snapshot.val();
+                    if (!Object.values(value).find(value => {
+                        return value.id === obj.id;
+                    })) {
+                        set(newEntryRef, obj).then(() => console.log("Schedule Written To Database"));
+                    } else {
+                        alert("This recipe is already in this day.")
+                    }
+                }
+            }, {onlyOnce: true});
 
             this.props.onHide();
         }
