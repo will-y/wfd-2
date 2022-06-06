@@ -3,17 +3,10 @@ import database from "../../firebase";
 import {onValue, push, ref, set} from "firebase/database";
 import "./Recipe.css"
 import "../schedule/Schedule.css";
-import {Button, FormControl} from "react-bootstrap";
+import {FormControl} from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
-import {LinkContainer} from 'react-router-bootstrap';
 import {Link} from "react-router-dom";
-
-const categoryOrder = {
-    "main": 0,
-    "drink": 1,
-    "side": 2,
-    "dessert": 3
-}
+import {sortRecipes} from "../../util/RecipeUtils";
 
 class RecipeList extends React.Component {
     constructor(props) {
@@ -32,7 +25,7 @@ class RecipeList extends React.Component {
         onValue(recipeRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                const dataList = [];
+                let dataList = [];
 
                 for (const key in data) {
                     dataList.push({
@@ -41,15 +34,7 @@ class RecipeList extends React.Component {
                     })
                 }
 
-                dataList.sort((a, b) => {
-                    if (categoryOrder[a.type] < categoryOrder[b.type]) {
-                        return -1;
-                    } else if (categoryOrder[a.type] === categoryOrder[b.type]) {
-                        return a.name.localeCompare(b.name);
-                    } else {
-                        return 1;
-                    }
-                });
+                dataList = sortRecipes(dataList);
 
                 this.setState({
                     recipes: dataList,
