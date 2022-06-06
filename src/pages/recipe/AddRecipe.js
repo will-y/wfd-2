@@ -16,7 +16,8 @@ class AddRecipeClass extends React.Component {
             type: "main",
             source: "",
             ingredients: [{name: "", quantity: "", unit: "#"}],
-            steps: [""]
+            steps: [""],
+            validated: false
         }
     }
 
@@ -57,36 +58,47 @@ class AddRecipeClass extends React.Component {
         });
     }
 
-    handleAddRecipe = () => {
-        const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
+    handleAddRecipe = (event) => {
+        const form = event.currentTarget;
 
-        const newRecipeRef = push(recipesRef);
-
-        const obj = {
-            name: this.state.name,
-            servings: this.state.servings,
-            type: this.state.type,
-            source: this.state.source,
-            ingredients: this.state.ingredients,
-            steps: this.state.steps
-        }
-
-        set(newRecipeRef, obj).then(() => {
-            console.log("Recipe Written To Database");
-            this.props.navigate("/recipes");
+        this.setState({
+            validated: true
         });
+        // don't do submit things let me do it
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (form.checkValidity()) {
+            const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
+
+            const newRecipeRef = push(recipesRef);
+
+            const obj = {
+                name: this.state.name,
+                servings: this.state.servings,
+                type: this.state.type,
+                source: this.state.source,
+                ingredients: this.state.ingredients,
+                steps: this.state.steps
+            }
+
+            set(newRecipeRef, obj).then(() => {
+                console.log("Recipe Written To Database");
+                this.props.navigate("/recipes");
+            });
+        }
     }
 
     render = () => {
         return (
-            <Form>
+            <Form noValidate validated={this.state.validated} onSubmit={this.handleAddRecipe}>
                 <Form.Group className="mb-3">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text"
                                   placeholder="Recipe Name"
                                   name="name"
                                   onChange={this.handleInputChange}
-                                  value={this.state.name}/>
+                                  value={this.state.name} required/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -99,7 +111,7 @@ class AddRecipeClass extends React.Component {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Select name="type" onChange={this.handleInputChange} value={this.state.type}>
+                    <Form.Select name="type" onChange={this.handleInputChange} value={this.state.type} required>
                         <option value="main">Main Course</option>
                         <option value="side">Side Item</option>
                         <option value="dessert">Dessert</option>
@@ -113,7 +125,7 @@ class AddRecipeClass extends React.Component {
                                   placeholder="Recipe Servings"
                                   name="servings"
                                   onChange={this.handleInputChange}
-                                  value={this.state.servings}/>
+                                  value={this.state.servings} required/>
                 </Form.Group>
 
                 <Form.Label>Ingredients</Form.Label>
@@ -127,17 +139,17 @@ class AddRecipeClass extends React.Component {
                                                   placeholder={`Ingredient ${index + 1}`}
                                                   name="name"
                                                   onChange={(event) => this.handleInputChangeIngredient(event, index)}
-                                                  value={this.state.ingredients[index].name}/>
+                                                  value={this.state.ingredients[index].name} required/>
                                 </Col>
                                 <Col xs={2}>
                                     <Form.Control type="number"
                                                   placeholder={'Qty'}
                                                   name="quantity"
                                                   onChange={(event) => this.handleInputChangeIngredient(event, index)}
-                                                  value={this.state.ingredients[index].quantity}/>
+                                                  value={this.state.ingredients[index].quantity} required/>
                                 </Col>
                                 <Col xs={2}>
-                                    <Form.Select name="unit" onChange={(event) => this.handleInputChangeIngredient(event, index)}>
+                                    <Form.Select name="unit" onChange={(event) => this.handleInputChangeIngredient(event, index)} required>
                                         {
                                             units.map((unit) =>
                                                 <option key={`${index}-${unit}`} value={unit}>{unit}</option>
@@ -191,7 +203,7 @@ class AddRecipeClass extends React.Component {
                                         <Form.Control type="text"
                                                       placeholder={`Step ${index + 1}`}
                                                       onChange={(event) => this.handleInputChangeStep(event, index)}
-                                                      value={this.state.steps[index]}/>
+                                                      value={this.state.steps[index]} required/>
                                     </Row>
                                 </Form.Group>
                             </Col>
@@ -229,7 +241,7 @@ class AddRecipeClass extends React.Component {
                     </Button>
                 </Row>
 
-                <Button variant="primary" onClick={() => this.handleAddRecipe()}>
+                <Button variant="primary" type="submit">
                     Add Recipe
                 </Button>
             </Form>
