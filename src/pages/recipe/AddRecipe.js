@@ -134,21 +134,21 @@ class AddRecipeClass extends React.Component {
                     this.state.ingredients.map((ingredientObj, index) =>
                         <Form.Group key={index}>
                             <Row className="g-1 mt-1">
-                                <Col xs={7}>
+                                <Col xs={4}>
                                     <Form.Control type="text"
                                                   placeholder={`Ingredient ${index + 1}`}
                                                   name="name"
                                                   onChange={(event) => this.handleInputChangeIngredient(event, index)}
                                                   value={this.state.ingredients[index].name} required/>
                                 </Col>
-                                <Col xs={2}>
+                                <Col xs={3}>
                                     <Form.Control type="number"
                                                   placeholder={'Qty'}
                                                   name="quantity"
                                                   onChange={(event) => this.handleInputChangeIngredient(event, index)}
                                                   value={this.state.ingredients[index].quantity} required/>
                                 </Col>
-                                <Col xs={2}>
+                                <Col xs={3}>
                                     <Form.Select name="unit" onChange={(event) => this.handleInputChangeIngredient(event, index)} required>
                                         {
                                             units.map((unit) =>
@@ -157,7 +157,7 @@ class AddRecipeClass extends React.Component {
                                         }
                                     </Form.Select>
                                 </Col>
-                                <Col xs={1}>
+                                <Col xs={2}>
                                     <Button variant="secondary" className="w-100" onClick={() => {
                                         this.setState((prevState) => {
                                             const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
@@ -197,7 +197,7 @@ class AddRecipeClass extends React.Component {
                 {
                     this.state.steps.map((step, index) =>
                         <Row key={index} className="g-1 mt-1">
-                            <Col xs={11}>
+                            <Col xs={10}>
                                 <Form.Group>
                                     <Row className="g-1">
                                         <Form.Control type="text"
@@ -207,7 +207,7 @@ class AddRecipeClass extends React.Component {
                                     </Row>
                                 </Form.Group>
                             </Col>
-                            <Col xs={1}>
+                            <Col xs={2}>
                                 <Button variant="secondary" className="w-100" onClick={() => {
                                     this.setState((prevState) => {
                                         const steps = JSON.parse(JSON.stringify(prevState.steps));
