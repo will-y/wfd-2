@@ -15,7 +15,8 @@ class ScheduleDay extends React.Component {
             modalShow: false,
             dateString: `${this.props.month}-${this.props.date}-${this.props.year}`,
             recipes: [],
-            activeRecipes: []
+            activeRecipes: [],
+            edit: false
         }
     }
 
@@ -36,6 +37,12 @@ class ScheduleDay extends React.Component {
                     }
                 });
             }
+        });
+    }
+
+    handleSwitchToggled = (event) => {
+        this.setState({
+            edit: event.target.checked
         });
     }
 
@@ -83,7 +90,8 @@ class ScheduleDay extends React.Component {
                                 this.state.recipes.map(recipe => {
                                     return (<RecipeListEntry recipe={recipe}
                                                              key={recipe.key} activeRecipes={this.state.activeRecipes}
-                                                             handleRecipeExpandClicked={this.handleRecipeExpandClicked}/>);
+                                                             handleRecipeExpandClicked={this.handleRecipeExpandClicked}
+                                                             edit={this.state.edit}/>);
                                 })
                             }
                         </Col>
@@ -100,7 +108,7 @@ class ScheduleDay extends React.Component {
                         <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                     </svg>
                 </Button>
-                <FormCheck type="switch" label="Edit" className="schedule-day-edit" />
+                <FormCheck type="switch" label="Edit" className="schedule-day-edit" value={this.state.edit} onChange={this.handleSwitchToggled} />
             </div>
         );
     }
