@@ -5,6 +5,7 @@ import RecipeListPopover from "../recipe/RecipeListPopover";
 import database from "../../firebase";
 import {onValue, ref, get} from "firebase/database";
 import RecipeListEntry from "../recipe/RecipeListEntry";
+import {sortRecipes} from "../../util/RecipeUtils";
 
 class ScheduleDay extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class ScheduleDay extends React.Component {
                     if (snapshot2.exists()) {
                         const schedule = snapshot2.val();
                         this.setState({
-                            recipes: this.getRecipes(recipes, schedule)
+                            recipes: sortRecipes(this.getRecipes(recipes, schedule))
                         });
                     }
                 });
