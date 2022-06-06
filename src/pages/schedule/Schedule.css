@@ -26,3 +26,7 @@
     top: 10px;
     right: 10px;
 }
+
+.trashcan-container:hover {
+    opacity: 0.8;
+}
