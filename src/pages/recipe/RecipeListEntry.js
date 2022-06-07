@@ -21,6 +21,17 @@ class RecipeListEntry extends React.Component {
                     }
                 });
             });
+
+            get(schedulesRef).then(snapshot => {
+                snapshot.forEach(daySnapshot => {
+                    daySnapshot.forEach(dayRecipeSnapshot => {
+                        if (dayRecipeSnapshot.val().id === this.props.recipe.key) {
+                            remove(dayRecipeSnapshot.ref).then(() => {});
+                            return true;
+                        }
+                    });
+                });
+            });
         } else if (this.props.location === "schedule") {
             const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + this.props.date);
 
@@ -28,7 +39,8 @@ class RecipeListEntry extends React.Component {
                 snapshot.forEach(childSnapshot => {
                     const data = childSnapshot.val();
                     if (data.id === this.props.recipe.key) {
-                        remove(childSnapshot.ref).then(() => console.log("Recipe Removed From Day"))
+                        remove(childSnapshot.ref).then(() => console.log("Recipe Removed From Day"));
+                        return true;
                     }
                 });
             });
