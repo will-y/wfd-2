@@ -62,10 +62,10 @@ class RecipeListEntry extends React.Component {
                 <div className={`recipe-list-instance mb-1 p-2 ${recipe.type}`} onClick={this.props.onClick}>
                     <Row>
                         <Col xs={5}>
-                            <p className="mb-0">{recipe.name}</p>
+                            <p className="mb-0 fw-bold">{recipe.name}</p>
                         </Col>
                         <Col xs>
-                            <p className="text-end mb-0">{recipe.servings} Servings</p>
+                            <p className="text-end mb-0 fw-bold">{recipe.servings} Servings</p>
                         </Col>
                         <Col xs={1} className={this.props.editRecipe ? "" : "d-none"}>
                             <div className="icon-container" onClick={() => this.setState({modalShow: true})}>
