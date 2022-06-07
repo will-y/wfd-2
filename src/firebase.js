@@ -12,21 +12,13 @@ import { getDatabase } from "firebase/database";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-
     apiKey: "AIzaSyC2r48UniL-5JztjocB9C-6sOwOg7Ghf7g",
-
     authDomain: "whats-for-dinner-2-e8323.firebaseapp.com",
-
     projectId: "whats-for-dinner-2-e8323",
-
     storageBucket: "whats-for-dinner-2-e8323.appspot.com",
-
     messagingSenderId: "364899915608",
-
     appId: "1:364899915608:web:f8868c2e0d03b6eef2772d",
-
     measurementId: "G-9RQVP7L0FL"
-
 };
 
 
