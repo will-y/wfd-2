@@ -16,12 +16,11 @@ class AddRecipeClass extends React.Component {
                 servings: this.props.recipe.servings,
                 type: this.props.recipe.type,
                 source: this.props.recipe.source,
-                ingredients: this.props.recipe.ingredients,
-                steps: this.props.recipe.steps,
+                ingredients: this.props.recipe.ingredients ? this.props.recipe.ingredients : [],
+                steps: this.props.recipe.steps ? this.props.recipe.steps : [],
                 validated: false
             }
 
-            console.log(this.state);
         } else {
             this.state = {
                 name: "",
@@ -188,6 +187,7 @@ class AddRecipeClass extends React.Component {
                                         this.setState((prevState) => {
                                             const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
                                             ingredients.splice(index, 1);
+                                            console.log(ingredients)
                                             return {
                                                 ingredients: ingredients
                                             };
