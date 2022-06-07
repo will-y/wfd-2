@@ -27,6 +27,6 @@
     right: 10px;
 }
 
-.trashcan-container:hover {
-    opacity: 0.8;
+.icon-container:hover {
+    opacity: 0.5;
 }

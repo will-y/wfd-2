@@ -128,7 +128,8 @@ class RecipeList extends React.Component {
                                          key={recipe.key}
                                          onClick={() => this.handleAddRecipeToDay(recipe.key)}
                                          location={this.props.location}
-                                         edit={this.props.edit}/>
+                                         edit={this.props.edit}
+                                         editRecipe={this.props.editRecipe}/>
                     );
                 })}
                 <Link to="/add-recipe" role="button"
