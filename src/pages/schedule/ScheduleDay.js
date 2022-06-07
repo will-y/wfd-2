@@ -34,6 +34,10 @@ class ScheduleDay extends React.Component {
                         this.setState({
                             recipes: sortRecipes(this.getRecipes(recipes, schedule))
                         });
+                    } else {
+                        this.setState({
+                            recipes: []
+                        });
                     }
                 });
             }
@@ -92,7 +96,8 @@ class ScheduleDay extends React.Component {
                                                              key={recipe.key} activeRecipes={this.state.activeRecipes}
                                                              handleRecipeExpandClicked={this.handleRecipeExpandClicked}
                                                              edit={this.state.edit}
-                                                             location="schedule"/>);
+                                                             location="schedule"
+                                                             date={this.state.dateString}/>);
                                 })
                             }
                         </Col>

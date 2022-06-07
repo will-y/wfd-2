@@ -6,20 +6,32 @@ import database from "../../firebase";
 class RecipeListEntry extends React.Component {
     handleDeleteRecipe = () => {
         const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
+        // All schedules
+        const schedulesRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule");
 
         if (this.props.location === "list") {
             // This is to remove recipes overall
+            // TODO: Also remove all instances of it from schedule
             get(recipesRef).then((snapshot) => {
                 snapshot.forEach(childSnapshot => {
                     if (childSnapshot.key === this.props.recipe.key) {
                         const toRemoveRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes/" + childSnapshot.key);
-                        remove(toRemoveRef).then(() => console.log("Recipe Removed From Day"));
+                        remove(toRemoveRef).then(() => console.log("Recipe Removed"));
                         return true;
                     }
                 });
             });
         } else if (this.props.location === "schedule") {
+            const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + this.props.date);
 
+            get(scheduleRef).then(snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    const data = childSnapshot.val();
+                    if (data.id === this.props.recipe.key) {
+                        remove(childSnapshot.ref).then(() => console.log("Recipe Removed From Day"))
+                    }
+                });
+            });
         }
     }
 
