@@ -115,7 +115,7 @@ class ScheduleDay extends React.Component {
                         <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                     </svg>
                 </Button>
-                <FormCheck type="switch" label="Edit" className="schedule-day-edit" value={this.state.edit} onChange={this.handleSwitchToggled} />
+                <FormCheck type="switch" label="Edit" className={"schedule-day-edit " + (this.state.recipes.length === 0 ? "d-none" : "")} value={this.state.edit} onChange={this.handleSwitchToggled} />
             </div>
         );
     }
