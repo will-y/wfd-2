@@ -20,7 +20,8 @@ class AddRecipeClass extends React.Component {
                 steps: this.props.recipe.steps,
                 validated: false
             }
-            //TODO: Finish this and also add a popover for add recipe
+
+            console.log(this.state);
         } else {
             this.state = {
                 name: "",
@@ -84,10 +85,6 @@ class AddRecipeClass extends React.Component {
         event.stopPropagation();
 
         if (form.checkValidity()) {
-            const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
-
-            const newRecipeRef = push(recipesRef);
-
             const obj = {
                 name: this.state.name,
                 servings: this.state.servings,
@@ -97,10 +94,22 @@ class AddRecipeClass extends React.Component {
                 steps: this.state.steps
             }
 
-            set(newRecipeRef, obj).then(() => {
-                console.log("Recipe Written To Database");
-                this.props.navigate("/recipes");
-            });
+            if (!this.props.edit) {
+                const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
+                const newRecipeRef = push(recipesRef);
+
+                set(newRecipeRef, obj).then(() => {
+                    console.log("Recipe Written To Database");
+                    this.props.navigate("/recipes");
+                });
+            } else {
+                const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes/" + this.props.recipe.key);
+
+                set(recipeRef, obj).then(() => {
+                    console.log("Recipe Updated");
+                    this.props.hideModal();
+                });
+            }
         }
     }
 
@@ -164,7 +173,9 @@ class AddRecipeClass extends React.Component {
                                                   value={this.state.ingredients[index].quantity} required/>
                                 </Col>
                                 <Col xs={3}>
-                                    <Form.Select name="unit" onChange={(event) => this.handleInputChangeIngredient(event, index)} required>
+                                    <Form.Select name="unit"
+                                                 onChange={(event) => this.handleInputChangeIngredient(event, index)}
+                                                 required value={this.state.ingredients[index].unit}>
                                         {
                                             units.map((unit) =>
                                                 <option key={`${index}-${unit}`} value={unit}>{unit}</option>
@@ -255,10 +266,20 @@ class AddRecipeClass extends React.Component {
                         </svg>
                     </Button>
                 </Row>
+                {this.props.edit ?
+                    <div className="modal-footer">
+                        <Button variant="primary" type="submit">
+                            Update Recipe
+                        </Button>
+                        <Button variant="secondary" onClick={this.props.hideModal}>
+                            Cancel
+                        </Button>
+                    </div> :
+                    <Button variant="primary" type="submit" className={this.props.edit ? "d-none" : ""}>
+                        Add Recipe
+                    </Button>
+                }
 
-                <Button variant="primary" type="submit">
-                    Add Recipe
-                </Button>
             </Form>
         );
     }

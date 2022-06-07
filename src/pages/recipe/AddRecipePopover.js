@@ -16,11 +16,8 @@ class AddRecipePopover extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddRecipe recipe={this.props.recipe} edit={true}/>
+                    <AddRecipe recipe={this.props.recipe} edit={true} hideModal={this.props.onHide}/>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.onHide}>Cancel</Button>
-                </Modal.Footer>
             </Modal>
         );
     }
