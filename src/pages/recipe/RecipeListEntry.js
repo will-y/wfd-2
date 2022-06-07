@@ -56,6 +56,7 @@ class RecipeListEntry extends React.Component {
 
     render() {
         const recipe = this.props.recipe;
+
         return (
             <>
                 <div className={`recipe-list-instance mb-1 p-2 ${recipe.type}`} onClick={this.props.onClick}>
@@ -89,28 +90,35 @@ class RecipeListEntry extends React.Component {
                             {recipe.source ?
                                 <p>Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
                             }
-
-                            <p>Ingredients</p>
-                            <ul>
-                                {
-                                    recipe.ingredients.map((ing, index) => {
-                                        const unit = ing.unit === "#" ? "" : " " + ing.unit;
-                                        return (
-                                            <li key={`${recipe.key}-${index}`}>{`${ing.name} (${ing.quantity}${unit})`}</li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                            <p>Steps</p>
-                            <ol>
-                                {
-                                    recipe.steps.map((step, index) => {
-                                        return (
-                                            <li key={`${recipe.key}-${index}`}>{step}</li>
-                                        )
-                                    })
-                                }
-                            </ol>
+                            {recipe.ingredients ?
+                                <>
+                                    <p>Ingredients</p>
+                                    <ul>
+                                        {
+                                            recipe.ingredients.map((ing, index) => {
+                                                const unit = ing.unit === "#" ? "" : " " + ing.unit;
+                                                return (
+                                                    <li key={`${recipe.key}-${index}`}>{`${ing.name} (${ing.quantity}${unit})`}</li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </> : <></>
+                            }
+                            {recipe.steps ?
+                                <>
+                                    <p>Steps</p>
+                                    <ol>
+                                        {
+                                            recipe.steps.map((step, index) => {
+                                                return (
+                                                    <li key={`${recipe.key}-${index}`}>{step}</li>
+                                                )
+                                            })
+                                        }
+                                    </ol>
+                                </> : <></>
+                            }
                         </div> : <div></div>
                     }
                     {!this.props.hideArrow ?
