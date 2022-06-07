@@ -88,10 +88,10 @@ class RecipeListEntry extends React.Component {
                     {this.props.activeRecipes.includes(recipe.key) ?
                         <div>
                             {recipe.source ?
-                                <p>Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
+                                <p className="recipe-section">Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
                             }
                             {recipe.ingredients ?
-                                <>
+                                <div className="recipe-section">
                                     <p>Ingredients</p>
                                     <ul>
                                         {
@@ -103,10 +103,10 @@ class RecipeListEntry extends React.Component {
                                             })
                                         }
                                     </ul>
-                                </> : <></>
+                                </div> : <></>
                             }
                             {recipe.steps ?
-                                <>
+                                <div className="recipe-section">
                                     <p>Steps</p>
                                     <ol>
                                         {
@@ -117,7 +117,7 @@ class RecipeListEntry extends React.Component {
                                             })
                                         }
                                     </ol>
-                                </> : <></>
+                                </div> : <></>
                             }
                         </div> : <div></div>
                     }
