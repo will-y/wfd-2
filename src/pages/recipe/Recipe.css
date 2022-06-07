@@ -3,20 +3,19 @@
 }
 
 .main {
-    background-color: #a43232;
-    color: white;
+    background-color: #F16565;
 }
 
 .side {
-    background-color: #f8a204;
+    background-color: #FF9F4D;
 }
 
 .dessert {
-    background-color: #e279bd;
+    background-color: #F195CB;
 }
 
 .drink {
-    background-color: #ff7500;
+    background-color: #FCB639;
 }
 
 .modal-90w {
@@ -30,4 +29,9 @@
 
 .recipe-section {
     font-size: 0.9em;
+}
+
+.recipe-section a {
+    color: #0442a6;
+    font-weight: bold;
 }
