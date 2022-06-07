@@ -91,7 +91,8 @@ class ScheduleDay extends React.Component {
                                     return (<RecipeListEntry recipe={recipe}
                                                              key={recipe.key} activeRecipes={this.state.activeRecipes}
                                                              handleRecipeExpandClicked={this.handleRecipeExpandClicked}
-                                                             edit={this.state.edit}/>);
+                                                             edit={this.state.edit}
+                                                             location="schedule"/>);
                                 })
                             }
                         </Col>
@@ -99,7 +100,8 @@ class ScheduleDay extends React.Component {
                 </div>
                 <RecipeListPopover show={this.state.modalShow}
                                    onHide={() => this.setState({modalShow: false})}
-                                   date={this.state.dateString}/>
+                                   date={this.state.dateString}
+                                   location="schedule-add"/>
                 <Button variant="success"
                         className="add-recipe-button"
                         onClick={() => this.setState({modalShow: true})}>

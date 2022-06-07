@@ -106,6 +106,8 @@ class RecipeList extends React.Component {
                     } else {
                         alert("This recipe is already in this day.")
                     }
+                } else {
+                    set(newEntryRef, obj).then(() => console.log("Schedule Written To Database"));
                 }
             }, {onlyOnce: true});
 
@@ -123,7 +125,10 @@ class RecipeList extends React.Component {
                                          activeRecipes={this.state.activeRecipes}
                                          handleRecipeExpandClicked={this.handleRecipeExpandClicked}
                                          hideArrow={this.props.hideArrow}
-                                         key={recipe.key} onClick={() => this.handleAddRecipeToDay(recipe.key)}/>
+                                         key={recipe.key}
+                                         onClick={() => this.handleAddRecipeToDay(recipe.key)}
+                                         location={this.props.location}
+                                         edit={this.props.edit}/>
                     );
                 })}
                 <Link to="/add-recipe" role="button"
