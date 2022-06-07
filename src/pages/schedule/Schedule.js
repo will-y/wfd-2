@@ -31,7 +31,7 @@ class Schedule extends React.Component {
                         const newDate = new Date();
                         newDate.setDate(date.getDate() + i);
                         return (
-                            <Col lg={3} key={i}>
+                            <Col lg={4} key={i}>
                                 <ScheduleDay day={weekday[newDate.getDay()]}
                                              date={newDate.getDate()}
                                              month={monthNames[newDate.getMonth()]}

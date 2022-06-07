@@ -27,6 +27,10 @@
     right: 10px;
 }
 
+.icon-container {
+    text-align: center;
+}
+
 .icon-container:hover {
     opacity: 0.5;
 }

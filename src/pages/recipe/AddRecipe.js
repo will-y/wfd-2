@@ -10,15 +10,30 @@ class AddRecipeClass extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            name: "",
-            servings: 0,
-            type: "main",
-            source: "",
-            ingredients: [{name: "", quantity: "", unit: "#"}],
-            steps: [""],
-            validated: false
+        if (this.props.recipe) {
+            this.state = {
+                name: this.props.recipe.name,
+                servings: this.props.recipe.servings,
+                type: this.props.recipe.type,
+                source: this.props.recipe.source,
+                ingredients: this.props.recipe.ingredients,
+                steps: this.props.recipe.steps,
+                validated: false
+            }
+            //TODO: Finish this and also add a popover for add recipe
+        } else {
+            this.state = {
+                name: "",
+                servings: 0,
+                type: "main",
+                source: "",
+                ingredients: [{name: "", quantity: "", unit: "#"}],
+                steps: [""],
+                validated: false
+            }
         }
+
+
     }
 
     handleInputChange = (event) => {
