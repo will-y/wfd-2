@@ -23,6 +23,9 @@ function App() {
                           <LinkContainer to="/add-recipe">
                               <Nav.Link>Add Recipe</Nav.Link>
                           </LinkContainer>
+                          <LinkContainer to="/ingredient-list">
+                              <Nav.Link>Ingredient List</Nav.Link>
+                          </LinkContainer>
                       </Nav>
                   </Navbar.Collapse>
               </Container>

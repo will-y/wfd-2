@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Schedule from "./pages/schedule/Schedule";
 import AddRecipe from "./pages/recipe/AddRecipe";
 import RecipeList from "./pages/recipe/RecipeList";
+import IngredientList from "./pages/ingredients/IngredientList";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
               <Route path="/" element={<Schedule />}/>
               <Route path="add-recipe" element={<AddRecipe />}/>
               <Route path="recipes" element={<RecipeList location="list" edit={true} editRecipe={true}/>}/>
+              <Route path="ingredient-list" element={<IngredientList />}/>
           </Route>
       </Routes>
   </BrowserRouter>
