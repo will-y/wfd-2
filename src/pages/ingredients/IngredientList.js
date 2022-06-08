@@ -60,9 +60,6 @@ class IngredientList extends React.Component {
                         }
                     }
 
-                    console.log(recipes);
-                    // map of recipeID to scale
-                    // TODO: get ingredients for all of these recipes, then scale by scale
                     const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
                     onValue(recipesRef, snapshot => {
                         if (snapshot.exists()) {
@@ -81,18 +78,41 @@ class IngredientList extends React.Component {
                                 }
 
                             }).flat();
-                            console.log(ingredientList);
                             this.setState({
-                                ingredientList: ingredientList
+                                ingredientList: this.combineIngredients(ingredientList)
                             });
                         }
                     });
                 }
             }, {onlyOnce: true});
+        }
+    }
 
-            // console.log(dates);
+    combineIngredients = ingredientList => {
+        ingredientList.sort((ing1, ing2) => ing1.name.toLowerCase().localeCompare(ing2.name.toLowerCase()));
+        const result = [];
+
+        for (const i in ingredientList) {
+            const ingredient = ingredientList[i];
+
+            if (result.length > 0) {
+                const ingredientInList = result[result.length - 1];
+                if (ingredient.name.toLowerCase() === ingredientInList.name.toLowerCase()) {
+                    if (ingredient.unit === ingredientInList.unit) {
+                        ingredientInList.quantity = ingredientInList.quantity + ingredient.quantity;
+                    } else {
+                        ingredient.name = "";
+                        result.push(ingredient);
+                    }
+                } else {
+                    result.push(ingredient);
+                }
+            } else {
+                result.push(ingredient);
+            }
         }
 
+        return result;
     }
 
     validDates = () => {
