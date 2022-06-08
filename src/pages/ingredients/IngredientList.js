@@ -101,7 +101,7 @@ class IngredientList extends React.Component {
         const startDate = datepickerStringToDateObject(this.state.startDate);
         const endDate = datepickerStringToDateObject(this.state.endDate);
 
-        return startDate < endDate;
+        return startDate <= endDate;
     }
 
 
