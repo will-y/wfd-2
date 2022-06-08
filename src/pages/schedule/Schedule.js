@@ -1,9 +1,8 @@
 import React from "react";
 import ScheduleDay from "./ScheduleDay";
 import {Button, Col, Row} from "react-bootstrap";
+import {getWeekDayName, getMonthName} from "../../util/DateUtils";
 
-const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 class Schedule extends React.Component {
     constructor(props) {
@@ -22,6 +21,8 @@ class Schedule extends React.Component {
         });
     }
 
+
+
     render() {
         const date = new Date();
         return (
@@ -32,9 +33,9 @@ class Schedule extends React.Component {
                         newDate.setDate(date.getDate() + i);
                         return (
                             <Col lg={4} key={i}>
-                                <ScheduleDay day={weekday[newDate.getDay()]}
+                                <ScheduleDay day={getWeekDayName(newDate.getDay())}
                                              date={newDate.getDate()}
-                                             month={monthNames[newDate.getMonth()]}
+                                             month={getMonthName(newDate.getMonth())}
                                              year={newDate.getFullYear()}/>
                             </Col>
                         );
