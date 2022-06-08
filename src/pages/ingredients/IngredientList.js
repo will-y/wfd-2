@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Row, Form} from "react-bootstrap";
+import {Col, Row, Form, Table} from "react-bootstrap";
 import {datepickerStringToDateObject, getDateStringsBetween} from "../../util/DateUtils";
 import {ref, onValue} from "firebase/database";
 import database from "../../firebase";
@@ -116,18 +116,34 @@ class IngredientList extends React.Component {
                         <Form.Control type="date" value={this.state.endDate} onChange={this.handleDateChange} name="endDate"/>
                     </Col>
                 </Row>
-                <Row>
-                    <p>Ingredients needed for {this.state.startDate} to {this.state.endDate}:</p>
+                <Row className="mt-2">
+                    <Col>
+                        <Table striped bordered hover className={this.state.ingredientList.length > 0 ? "" : "d-none"}>
+                            <thead>
+                            <tr>
+                                <th>Ingredient</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            {
+                                this.state.ingredientList.map((ingredient, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{ingredient.name}</td>
+                                            <td>{ingredient.quantity}</td>
+                                            <td>{ingredient.unit}</td>
+                                        </tr>
+                                    );
+                                })
+                            }
+                            </tbody>
+                        </Table>
+                    </Col>
+
                 </Row>
-                {this.state.ingredientList.map((ingredient, index) => {
-                    return (
-                        <div key={index}>
-                            <p>{ingredient.name}</p>
-                            <p>{ingredient.quantity}</p>
-                            <p>{ingredient.unit}</p>
-                        </div>
-                    );
-                })}
             </>
         );
     }
