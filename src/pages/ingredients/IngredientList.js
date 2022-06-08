@@ -1,6 +1,8 @@
 import React from "react";
 import {Col, Row, Form} from "react-bootstrap";
 import {datepickerStringToDateObject, getDateStringsBetween} from "../../util/DateUtils";
+import {ref, onValue} from "firebase/database";
+import database from "../../firebase";
 
 class IngredientList extends React.Component {
     constructor(props) {
@@ -24,6 +26,43 @@ class IngredientList extends React.Component {
     getIngredients = () => {
         if (this.validDates()) {
             const dates = getDateStringsBetween(this.state.startDate, this.state.endDate);
+
+            const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/");
+
+            onValue(scheduleRef, snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+
+                    const filteredData = Object.fromEntries(Object.entries(data).filter(([key, _]) => {
+                        return dates.includes(key);
+                    }));
+
+                    let recipes = {};
+                    for (const key in filteredData) {
+                        const dataEntry = filteredData[key];
+
+                        const vals = Object.values(dataEntry);
+                        for (const i in vals) {
+                            const val = vals[i];
+                            const recipe = val.id;
+                            const amount = val.scaleFactor;
+
+                            if (Object.keys(recipes).includes(recipe)) {
+                                recipes[recipe] += amount;
+                            } else {
+                                recipes = {
+                                    ...recipes,
+                                    [recipe]: amount
+                                }
+                            }
+                        }
+                    }
+
+                    console.log(recipes);
+                    // map of recipeID to scale
+                    // TODO: get ingredients for all of these recipes, then scale by scale
+                }
+            }, {onlyOnce: true});
 
             console.log(dates);
         }
@@ -52,7 +91,7 @@ class IngredientList extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <p>Ingredients needed for {this.state.startDate} to {this.state.endDate}</p>
+                    <p>Ingredients needed for {this.state.startDate} to {this.state.endDate}:</p>
                 </Row>
                 <Row>
 
