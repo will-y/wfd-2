@@ -119,6 +119,12 @@ class RecipeListEntry extends React.Component {
                                     </ol>
                                 </div> : <></>
                             }
+                            {recipe.notes ?
+                                <div className="recipe-section">
+                                    <p>Notes</p>
+                                    <p className="ms-2">{recipe.notes}</p>
+                                </div> : <></>
+                            }
                         </div> : <div></div>
                     }
                     {!this.props.hideArrow ?

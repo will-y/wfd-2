@@ -18,6 +18,7 @@ class AddRecipeClass extends React.Component {
                 source: this.props.recipe.source,
                 ingredients: this.props.recipe.ingredients ? this.props.recipe.ingredients : [],
                 steps: this.props.recipe.steps ? this.props.recipe.steps : [],
+                notes: this.props.recipe.notes ? this.props.recipe.notes : "",
                 validated: false
             }
 
@@ -29,6 +30,7 @@ class AddRecipeClass extends React.Component {
                 source: "",
                 ingredients: [{name: "", quantity: "", unit: "#"}],
                 steps: [""],
+                notes: "",
                 validated: false
             }
         }
@@ -90,7 +92,8 @@ class AddRecipeClass extends React.Component {
                 type: this.state.type,
                 source: this.state.source,
                 ingredients: this.state.ingredients,
-                steps: this.state.steps
+                steps: this.state.steps,
+                notes: this.state.notes
             }
 
             if (!this.props.edit) {
@@ -98,14 +101,12 @@ class AddRecipeClass extends React.Component {
                 const newRecipeRef = push(recipesRef);
 
                 set(newRecipeRef, obj).then(() => {
-                    console.log("Recipe Written To Database");
                     this.props.navigate("/recipes");
                 });
             } else {
                 const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes/" + this.props.recipe.key);
 
                 set(recipeRef, obj).then(() => {
-                    console.log("Recipe Updated");
                     this.props.hideModal();
                 });
             }
@@ -149,6 +150,16 @@ class AddRecipeClass extends React.Component {
                                   name="servings"
                                   onChange={this.handleInputChange}
                                   value={this.state.servings} required/>
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                    <Form.Label>Notes</Form.Label>
+                    <Form.Control as="textarea"
+                                  rows={3}
+                                  placeholder="Notes"
+                                  name="notes"
+                                  onChange={this.handleInputChange}
+                                  value={this.state.notes} required/>
                 </Form.Group>
 
                 <Form.Label>Ingredients</Form.Label>

@@ -31,6 +31,10 @@
     font-size: 0.9em;
 }
 
+.recipe-section p {
+    margin-bottom: 0;
+}
+
 .recipe-section a {
     color: #0442a6;
     font-weight: bold;
