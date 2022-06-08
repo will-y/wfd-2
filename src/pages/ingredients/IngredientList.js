@@ -10,7 +10,8 @@ class IngredientList extends React.Component {
 
         this.state = {
             startDate: "",
-            endDate: ""
+            endDate: "",
+            ingredientList: []
         };
     }
 
@@ -19,7 +20,8 @@ class IngredientList extends React.Component {
         const value = event.target.value;
 
         this.setState({
-            [name]: value
+            [name]: value,
+            ingredientList: []
         }, () => this.getIngredients());
     }
 
@@ -61,10 +63,34 @@ class IngredientList extends React.Component {
                     console.log(recipes);
                     // map of recipeID to scale
                     // TODO: get ingredients for all of these recipes, then scale by scale
+                    const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
+                    onValue(recipesRef, snapshot => {
+                        if (snapshot.exists()) {
+                            const recipeObjects = snapshot.val();
+                            const ingredientList = Object.entries(recipes).map(([key, value]) => {
+                                // key: recipe id
+                                // value: scale
+                                const ingredients = recipeObjects[key].ingredients;
+                                if (ingredients) {
+                                    for (const i in ingredients) {
+                                        ingredients[i].quantity = ingredients[i].quantity * value;
+                                    }
+                                    return ingredients;
+                                } else {
+                                    return [];
+                                }
+
+                            }).flat();
+                            console.log(ingredientList);
+                            this.setState({
+                                ingredientList: ingredientList
+                            });
+                        }
+                    });
                 }
             }, {onlyOnce: true});
 
-            console.log(dates);
+            // console.log(dates);
         }
 
     }
@@ -93,9 +119,15 @@ class IngredientList extends React.Component {
                 <Row>
                     <p>Ingredients needed for {this.state.startDate} to {this.state.endDate}:</p>
                 </Row>
-                <Row>
-
-                </Row>
+                {this.state.ingredientList.map((ingredient, index) => {
+                    return (
+                        <div key={index}>
+                            <p>{ingredient.name}</p>
+                            <p>{ingredient.quantity}</p>
+                            <p>{ingredient.unit}</p>
+                        </div>
+                    );
+                })}
             </>
         );
     }
