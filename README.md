@@ -10,6 +10,7 @@ This app is for keeping track of recipes and eating schedules.
   - Icons all the way on right
   - Floating labels for forms
   - Tags
+  - Delete conformation
 - Bugs
   - Navbar doesn't always highlight correct option
   - FAB isn't always at bottom

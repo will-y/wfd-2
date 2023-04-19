@@ -1,5 +1,6 @@
 .recipe-list-instance {
     border: 1px solid black;
+    transition: max-height 1s;
 }
 
 .main {

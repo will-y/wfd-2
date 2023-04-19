@@ -4,12 +4,26 @@ import {get, ref, remove} from "firebase/database";
 import database from "../../firebase";
 import AddRecipePopover from "./AddRecipePopover";
 
+/**
+ * Inputs:
+ * - `recipe` (Recipe): Recipe data
+ * - `activeRecipes` (RecipeKey[]): List of active recipes to see if this recipe needs to be expanded or not
+ * - `hideArrow` (boolean): Hide the expand arrow (blocks the recipe from being expanded) // TODO: rename
+ * - `key` (RecipeKey): Unique key of the recipe
+ * - `onClick` (function): Function that is called when entire recipe hedaer is clicked
+ * - `location` (string): String to determine certain behavior or the recipe. ("list" or "schedule")
+ *      - list: delete will delete from database
+ *      - schedule: delete will just remove from that day on the schedule
+ * - `edit` (boolean): If the delete button shows up?
+ * - `editRecipe (boolean): If the edit recipe button shows up
+ */
 class RecipeListEntry extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            modalShow: false
+            modalShow: false,
+            expanded: false
         }
     }
     handleDeleteRecipe = () => {
@@ -54,6 +68,14 @@ class RecipeListEntry extends React.Component {
         }
     }
 
+    toggleExpansion = () => {
+        this.setState(prevState => {
+            return {
+                expanded :!prevState.expanded
+            }
+        })
+    }
+
     render() {
         const recipe = this.props.recipe;
 
@@ -85,7 +107,7 @@ class RecipeListEntry extends React.Component {
 
                         </Col>
                     </Row>
-                    {this.props.activeRecipes.includes(recipe.key) ?
+                    {this.state.expanded ?
                         <div>
                             {recipe.source ?
                                 <p className="recipe-section">Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
@@ -128,8 +150,8 @@ class RecipeListEntry extends React.Component {
                         </div> : <div></div>
                     }
                     {!this.props.hideArrow ?
-                        <Row onClick={() => this.props.handleRecipeExpandClicked(recipe.key)}>
-                            {this.props.activeRecipes.includes(recipe.key) ?
+                        <Row onClick={this.toggleExpansion}>
+                            {this.state.expanded ?
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      className="bi bi-chevron-up" viewBox="0 0 16 16">
                                     <path fillRule="evenodd"

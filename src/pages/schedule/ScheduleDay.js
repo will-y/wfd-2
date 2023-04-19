@@ -63,25 +63,6 @@ class ScheduleDay extends React.Component {
         return recipe;
     }
 
-    // TODO: lot of copied code
-    handleRecipeExpandClicked = (id) => {
-        this.setState(prevState => {
-            const prevActive = JSON.parse(JSON.stringify(prevState.activeRecipes));
-            if (prevActive.includes(id)) {
-                const index = prevActive.indexOf(id);
-                if (index !== -1) {
-                    prevActive.splice(index, 1);
-                }
-            } else {
-                prevActive.push(id);
-            }
-
-            return {
-                activeRecipes: prevActive
-            }
-        });
-    }
-
     render() {
         return (
             <div className="day-container app-card">
@@ -94,7 +75,6 @@ class ScheduleDay extends React.Component {
                                 this.state.recipes.map(recipe => {
                                     return (<RecipeListEntry recipe={recipe}
                                                              key={recipe.key} activeRecipes={this.state.activeRecipes}
-                                                             handleRecipeExpandClicked={this.handleRecipeExpandClicked}
                                                              edit={this.state.edit}
                                                              location="schedule"
                                                              date={this.state.dateString}/>);
