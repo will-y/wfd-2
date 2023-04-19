@@ -177,7 +177,7 @@ class AddRecipeClass extends React.Component {
 
                     {
                         this.state.ingredients.map((ingredientObj, index) =>
-                            <Form.Group key={index} className="ingredient-card">
+                            <Form.Group key={index} className="app-card">
                                 <Row className="g-1 mt-1">
                                     <Col sm={4}>
                                         <FloatingLabel label={`Ingredient ${index + 1}`}>

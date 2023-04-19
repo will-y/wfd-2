@@ -26,7 +26,7 @@ class Schedule extends React.Component {
     render() {
         const date = new Date();
         return (
-            <Row className="g-1 m-2">
+            <Row className="g-3 m-2">
                 {
                     Array.from(Array(this.state.days).keys()).map((i) => {
                         const newDate = new Date();

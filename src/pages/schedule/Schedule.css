@@ -1,8 +1,7 @@
 .day-container {
     width: 100%;
-    border: 2px solid black;
-    border-radius: 20px;
     position: relative;
+    height: 100%;
 }
 
 .day-recipe {
@@ -33,4 +32,9 @@
 
 .icon-container:hover {
     opacity: 0.5;
+}
+
+.schedule-day-of-week {
+    margin-bottom: 0;
+    font-weight: bolder;
 }

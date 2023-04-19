@@ -84,10 +84,10 @@ class ScheduleDay extends React.Component {
 
     render() {
         return (
-            <div className="day-container">
+            <div className="day-container app-card">
                 <div className="p-3">
-                    <p>{this.props.day}</p>
-                    <p>{this.props.month} {this.props.date}</p>
+                    <p className="mb-0 fw-bold">{this.props.day}</p>
+                    <p className="fw-semibold">{this.props.month} {this.props.date}</p>
                     <Row className="mb-5">
                         <Col>
                             {
