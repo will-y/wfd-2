@@ -9,5 +9,7 @@ This app is for keeping track of recipes and eating schedules.
   - Use expansion panels
   - Icons all the way on right
   - Floating labels for forms
+  - Tags
 - Bugs
   - Navbar doesn't always highlight correct option
+  - FAB isn't always at bottom
