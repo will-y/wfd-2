@@ -20,7 +20,7 @@ function App() {
                           <LinkContainer to="/recipes">
                               <Nav.Link>Recipes</Nav.Link>
                           </LinkContainer>
-                          <LinkContainer to="/add-recipe">
+                          <LinkContainer to="/add">
                               <Nav.Link>Add Recipe</Nav.Link>
                           </LinkContainer>
                           <LinkContainer to="/ingredient-list">

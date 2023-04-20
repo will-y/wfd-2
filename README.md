@@ -5,13 +5,7 @@ This app is for keeping track of recipes and eating schedules.
 ## Known Issues (TODO)
 - Features
   - No authentication
-  - Better cards on recipes
-  - Use expansion panels
-  - Icons all the way on right
-  - Floating labels for forms
   - Tags
   - Delete conformation
-  - Should probably have a DAO / service
 - Bugs
-  - Navbar doesn't always highlight correct option
-  - FAB isn't always at bottom
+  - Navbar doesn't always highlight correct option (seems like bootstrap)

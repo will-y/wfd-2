@@ -12,7 +12,7 @@
 }
 
 .add-recipe-button {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     border-radius: 100%;
