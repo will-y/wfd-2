@@ -82,7 +82,7 @@ class RecipeListEntry extends React.Component {
 
         return (
             <>
-                <div className={`recipe-list-instance mb-1 p-2 ${recipe.type}`} onClick={this.props.onClick}>
+                <div className={`recipe-list-instance mb-2 p-2 app-card ${recipe.type}`} onClick={this.props.onClick}>
                     <Row>
                         <Col xs={5}>
                             <p className="mb-0 fw-bold">{recipe.name}</p>

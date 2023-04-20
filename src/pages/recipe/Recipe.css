@@ -1,22 +1,21 @@
 .recipe-list-instance {
-    border: 1px solid black;
-    transition: max-height 1s;
+    border: 1px solid rgb(150, 150, 150);
 }
 
 .main {
-    background-color: #F16565;
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
 .side {
-    background-color: #FF9F4D;
+    background-color: rgba(255, 117, 0, 0.4);
 }
 
 .dessert {
-    background-color: #F195CB;
+    background-color: rgba(255, 0, 150, 0.4);
 }
 
 .drink {
-    background-color: #FCB639;
+    background-color: rgba(255, 212, 0, 0.4);
 }
 
 .modal-90w {
