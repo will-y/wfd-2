@@ -18,7 +18,11 @@ class RecipeListPopover extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RecipeList hideArrow={true} date={this.props.date} onHide={this.props.onHide} location={this.props.location}/>
+                    <RecipeList hideArrow={true}
+                                date={this.props.date}
+                                onHide={this.props.onHide}
+                                location={this.props.location}
+                                hideAddButton={true}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Cancel</Button>
