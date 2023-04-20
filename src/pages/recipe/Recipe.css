@@ -40,3 +40,14 @@
     color: #0442a6;
     font-weight: bold;
 }
+
+.recipe-expansion {
+    max-height: 0;
+    transition: max-height 2s;
+    overflow: hidden;
+}
+
+.recipe-expansion-expanded {
+    max-height: 3000px;
+    transition: max-height 10s;
+}

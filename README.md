@@ -11,6 +11,7 @@ This app is for keeping track of recipes and eating schedules.
   - Floating labels for forms
   - Tags
   - Delete conformation
+  - Should probably have a DAO / service
 - Bugs
   - Navbar doesn't always highlight correct option
   - FAB isn't always at bottom

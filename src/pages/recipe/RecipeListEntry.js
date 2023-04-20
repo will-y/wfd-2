@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Row} from "react-bootstrap";
+import {Col, Collapse, Row} from "react-bootstrap";
 import {get, ref, remove} from "firebase/database";
 import database from "../../firebase";
 import AddRecipePopover from "./AddRecipePopover";
@@ -26,6 +26,7 @@ class RecipeListEntry extends React.Component {
             expanded: false
         }
     }
+
     handleDeleteRecipe = () => {
         const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
         // All schedules
@@ -73,7 +74,7 @@ class RecipeListEntry extends React.Component {
             return {
                 expanded :!prevState.expanded
             }
-        })
+        });
     }
 
     render() {
@@ -107,7 +108,7 @@ class RecipeListEntry extends React.Component {
 
                         </Col>
                     </Row>
-                    {this.state.expanded ?
+                    <Collapse in={this.state.expanded}>
                         <div>
                             {recipe.source ?
                                 <p className="recipe-section">Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
@@ -147,8 +148,8 @@ class RecipeListEntry extends React.Component {
                                     <p className="ms-2">{recipe.notes}</p>
                                 </div> : <></>
                             }
-                        </div> : <div></div>
-                    }
+                        </div>
+                    </Collapse>
                     {!this.props.hideArrow ?
                         <Row onClick={this.toggleExpansion}>
                             {this.state.expanded ?
