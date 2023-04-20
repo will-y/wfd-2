@@ -32,6 +32,7 @@
 
 .icon-container {
     text-align: center;
+    cursor: pointer;
 }
 
 .icon-container:hover {
