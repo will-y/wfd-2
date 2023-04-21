@@ -10,3 +10,7 @@
 .keyword-x:active {
     opacity: 0.6;
 }
+
+.keywords-container {
+    min-height: 24px;
+}

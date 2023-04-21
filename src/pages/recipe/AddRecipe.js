@@ -4,6 +4,7 @@ import database from "../../firebase";
 import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
 import Keyword from "./keyword/Keyword";
+import KeywordInput from "./keyword/KeywordInput";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
 
@@ -173,9 +174,11 @@ class AddRecipeClass extends React.Component {
                             </FloatingLabel>
                         </Col>
                     </Row>
-                    <Keyword name="Test Keyword"></Keyword>
-                    <h3>Ingredients</h3>
 
+                    <h3>Keywords</h3>
+                    <KeywordInput></KeywordInput>
+
+                    <h3>Ingredients</h3>
                     {
                         this.state.ingredients.map((ingredientObj, index) =>
                             <Form.Group key={index} className="app-card">
