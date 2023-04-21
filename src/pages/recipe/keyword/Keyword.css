@@ -1,0 +1,12 @@
+.keyword-x {
+    margin-left: 4px;
+}
+
+.keyword-x:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.keyword-x:active {
+    opacity: 0.6;
+}

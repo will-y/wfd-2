@@ -3,6 +3,7 @@ import React from "react";
 import database from "../../firebase";
 import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
+import Keyword from "./keyword/Keyword";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
 
@@ -172,7 +173,7 @@ class AddRecipeClass extends React.Component {
                             </FloatingLabel>
                         </Col>
                     </Row>
-
+                    <Keyword name="Test Keyword"></Keyword>
                     <h3>Ingredients</h3>
 
                     {
