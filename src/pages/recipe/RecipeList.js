@@ -3,7 +3,7 @@ import database from "../../firebase";
 import {onValue, push, ref, set} from "firebase/database";
 import "./Recipe.css"
 import "../schedule/Schedule.css";
-import {FormControl} from "react-bootstrap";
+import {Col, FormControl, Row, Form} from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
 import {Link} from "react-router-dom";
 import {sortRecipes} from "../../util/RecipeUtils";
@@ -48,31 +48,37 @@ class RecipeList extends React.Component {
 
                 this.setState({
                     recipes: dataList,
-                    filteredRecipes: JSON.parse(JSON.stringify(dataList))
+                    filteredRecipes: JSON.parse(JSON.stringify(dataList)),
+                    nameFilter: "",
+                    typeFilter: ""
                 });
             }
         });
     }
 
-    handleSearchChanged = (event) => {
-        const value = event.target.value;
-
-        if (value === "") {
-            this.setState(prevState => {
-                return {
-                    filteredRecipes: JSON.parse(JSON.stringify(prevState.recipes))
-                };
-            });
-        } else {
-            const filtered = this.state.recipes.filter(val => {
-                return val.name.toLowerCase().includes(value.toLowerCase());
-            });
-            this.setState(prevState => {
-                return {
-                    filteredRecipes: filtered
-                };
-            });
-        }
+    handleFilterChange = (event) => {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: target.value
+        }, () => {
+            if (this.state.typeFilter === "" && this.state.nameFilter === "") {
+                this.setState(prevState => {
+                    return {
+                        filteredRecipes: JSON.parse(JSON.stringify(prevState.recipes))
+                    };
+                });
+            } else {
+                this.setState(prevState => {
+                    return {
+                        filteredRecipes: prevState.recipes.filter(val => {
+                            return val.name.toLowerCase().includes(prevState.nameFilter.toLowerCase()) &&
+                                val.type.includes(prevState.typeFilter)
+                        })
+                    }
+                });
+            }
+        });
     }
 
     handleAddRecipeToDay = (recipeId) => {
@@ -110,7 +116,23 @@ class RecipeList extends React.Component {
     render() {
         return (
             <div className="m-2">
-                <FormControl placeholder="Search" className="mb-1" onChange={this.handleSearchChanged}/>
+                <Row>
+                    <Col lg={6}>
+                        <FormControl placeholder="Search" className="mb-1" onChange={this.handleFilterChange} name="nameFilter"/>
+                    </Col>
+                    <Col lg={3}>
+                        <Form.Select onChange={this.handleFilterChange} name="typeFilter">
+                            <option value="">All Recipe Types</option>
+                            <option className="main-option" value="main">Main</option>
+                            <option className="drink-option" value="drink">Drink</option>
+                            <option className="side-option" value="side">Side</option>
+                            <option className="dessert-option" value="dessert">Dessert</option>
+                        </Form.Select>
+                    </Col>
+                    <Col lg={3}>
+                        {/*TODO: https://react-bootstrap.github.io/components/dropdowns/#custom-dropdown-components*/}
+                    </Col>
+                </Row>
                 {this.state.filteredRecipes.map((recipe) => {
                     return (
                         <RecipeListEntry recipe={recipe}
