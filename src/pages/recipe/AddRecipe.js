@@ -21,9 +21,9 @@ class AddRecipeClass extends React.Component {
                 ingredients: this.props.recipe.ingredients ? this.props.recipe.ingredients : [],
                 steps: this.props.recipe.steps ? this.props.recipe.steps : [],
                 notes: this.props.recipe.notes ? this.props.recipe.notes : "",
+                keywords: this.props.recipe.keywords,
                 validated: false
             }
-
         } else {
             this.state = {
                 name: "",
@@ -33,11 +33,10 @@ class AddRecipeClass extends React.Component {
                 ingredients: [{name: "", quantity: "", unit: "#"}],
                 steps: [""],
                 notes: "",
+                keywords: [],
                 validated: false
             }
         }
-
-
     }
 
     handleInputChange = (event) => {
@@ -95,8 +94,11 @@ class AddRecipeClass extends React.Component {
                 source: this.state.source,
                 ingredients: this.state.ingredients,
                 steps: this.state.steps,
-                notes: this.state.notes
+                notes: this.state.notes,
+                keywords: this.state.keywords
             }
+
+            console.log(obj)
 
             if (!this.props.edit) {
                 const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
@@ -176,7 +178,10 @@ class AddRecipeClass extends React.Component {
                     </Row>
 
                     <h3>Keywords</h3>
-                    <KeywordInput></KeywordInput>
+                    <KeywordInput
+                        updateKeywords={(keywords) => this.setState({keywords: keywords})}
+                        initialKeywords={this.state.keywords}>
+                    </KeywordInput>
 
                     <h3>Ingredients</h3>
                     {

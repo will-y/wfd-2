@@ -5,7 +5,7 @@ import "./Keyword.css";
 
 export default function KeywordInput(props) {
     const [keyword, setKeyword] = useState('');
-    const [keywords, setKeywords] = useState(["keyword1", "keyword2", "keyword3", "keyword4"]);
+    const [keywords, setKeywords] = useState(props.initialKeywords ? [...props.initialKeywords] : []);
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
@@ -19,9 +19,7 @@ export default function KeywordInput(props) {
                 newKeywords.push(keyword);
                 setKeywords(newKeywords);
                 setKeyword('');
-                if (props.updateKeywords) {
-                    props.updateKeywords(keywords);
-                }
+                props.updateKeywords(newKeywords);
             }
         }
     }
@@ -33,6 +31,7 @@ export default function KeywordInput(props) {
 
             if (index >= 0) {
                 copy.splice(index, 1);
+                props.updateKeywords(copy);
             }
 
             return copy;
