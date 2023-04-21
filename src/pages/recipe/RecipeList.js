@@ -41,7 +41,7 @@ class RecipeList extends React.Component {
                     dataList.push({
                         ...data[key],
                         key: key
-                    })
+                    });
                 }
 
                 dataList = sortRecipes(dataList);
@@ -144,6 +144,9 @@ class RecipeList extends React.Component {
                                          editRecipe={this.props.editRecipe}/>
                     );
                 })}
+                {this.state.filteredRecipes.length === 0 ?
+                    <div>No recipes for the selected filters</div> : <></>
+                }
                 {!this.props.hideAddButton ?
                     <Link to="/add"
                           role="button"
