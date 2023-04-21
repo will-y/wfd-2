@@ -98,8 +98,6 @@ class AddRecipeClass extends React.Component {
                 keywords: this.state.keywords
             }
 
-            console.log(obj)
-
             if (!this.props.edit) {
                 const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
                 const newRecipeRef = push(recipesRef);
@@ -225,7 +223,6 @@ class AddRecipeClass extends React.Component {
                                             this.setState((prevState) => {
                                                 const ingredients = JSON.parse(JSON.stringify(prevState.ingredients));
                                                 ingredients.splice(index, 1);
-                                                console.log(ingredients)
                                                 return {
                                                     ingredients: ingredients
                                                 };

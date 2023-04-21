@@ -109,12 +109,17 @@ class RecipeListEntry extends React.Component {
                     </Row>
                     <Collapse in={this.state.expanded}>
                         <div>
+                            {recipe.keywords ?
+                                <p className="recipe-section fw-bold">
+                                    Keywords: <span className="fw-normal">{recipe.keywords.join(', ')}</span>
+                                </p> : <></>
+                            }
                             {recipe.source ?
-                                <p className="recipe-section">Source: {(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</p> : <></>
+                                <p className="recipe-section fw-bold">Source: <span className="fw-normal">{(recipe.source.includes("https://") || recipe.source.includes("http://")) ? <a href={recipe.source} target="_blank" rel="noreferrer">{recipe.source}</a> : <>{recipe.source}</>}</span></p> : <></>
                             }
                             {recipe.ingredients ?
                                 <div className="recipe-section">
-                                    <p>Ingredients</p>
+                                    <p className="fw-bold">Ingredients:</p>
                                     <ul>
                                         {
                                             recipe.ingredients.map((ing, index) => {
@@ -129,7 +134,7 @@ class RecipeListEntry extends React.Component {
                             }
                             {recipe.steps ?
                                 <div className="recipe-section">
-                                    <p>Steps</p>
+                                    <p className="fw-bold">Steps:</p>
                                     <ol>
                                         {
                                             recipe.steps.map((step, index) => {
@@ -143,7 +148,7 @@ class RecipeListEntry extends React.Component {
                             }
                             {recipe.notes ?
                                 <div className="recipe-section">
-                                    <p>Notes</p>
+                                    <p className="fw-bold">Notes:</p>
                                     <p className="ms-2">{recipe.notes}</p>
                                 </div> : <></>
                             }
