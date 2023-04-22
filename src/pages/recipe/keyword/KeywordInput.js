@@ -14,9 +14,8 @@ export default function KeywordInput(props) {
             event.preventDefault();
 
             // Handle enter press
-            if (keyword !== "" && !keywords.includes(keyword)) {
-                const newKeywords = [...keywords];
-                newKeywords.push(keyword);
+            if (keyword !== "" && !keywords.includes(keyword.toLowerCase())) {
+                const newKeywords = [...keywords, keyword.toLowerCase()];
                 setKeywords(newKeywords);
                 setKeyword('');
                 props.updateKeywords(newKeywords);
