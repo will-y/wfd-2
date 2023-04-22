@@ -40,14 +40,14 @@ export default function KeywordInput(props) {
 
     return (
         <>
-            <div className="keywords-container">
+            <div className={props.removePadding ? "" : "keywords-container"}>
                 {keywords.map((keyword, index) =>
                     <Keyword name={keyword} key={index} onDeletePressed={deleteKeyword}></Keyword>
                 )}
             </div>
             <FormControl
-                className="mt-2"
-                placeholder="Add Keywords"
+                className="mt-1"
+                placeholder={props.placeholder ? props.placeholder : "Add Keywords"}
                 value={keyword}
                 onChange={event => setKeyword(event.target.value)}
                 onKeyDown={handleKeyDown}/>

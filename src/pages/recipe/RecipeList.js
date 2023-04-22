@@ -7,6 +7,7 @@ import {Col, FormControl, Row, Form} from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
 import {Link} from "react-router-dom";
 import {sortRecipes} from "../../util/RecipeUtils";
+import KeywordInput from "./keyword/KeywordInput";
 
 /**
  * Inputs:
@@ -25,7 +26,8 @@ class RecipeList extends React.Component {
 
         this.state = {
             recipes: [],
-            filteredRecipes: []
+            filteredRecipes: [],
+            keywords: []
         }
     }
 
@@ -61,24 +63,49 @@ class RecipeList extends React.Component {
         const name = target.name;
         this.setState({
             [name]: target.value
-        }, () => {
-            if (this.state.typeFilter === "" && this.state.nameFilter === "") {
-                this.setState(prevState => {
-                    return {
-                        filteredRecipes: JSON.parse(JSON.stringify(prevState.recipes))
-                    };
-                });
-            } else {
-                this.setState(prevState => {
-                    return {
-                        filteredRecipes: prevState.recipes.filter(val => {
-                            return val.name.toLowerCase().includes(prevState.nameFilter.toLowerCase()) &&
-                                val.type.includes(prevState.typeFilter)
-                        })
-                    }
-                });
+        }, this.applyFilters);
+    }
+
+    updateKeywords = (keywords) => {
+        this.setState({keywords: keywords}, this.applyFilters)
+    }
+
+    applyFilters = () => {
+        if (this.state.typeFilter === "" && this.state.nameFilter === "" && this.state.keywords.length === 0) {
+            this.setState(prevState => {
+                return {
+                    filteredRecipes: JSON.parse(JSON.stringify(prevState.recipes))
+                };
+            });
+        } else {
+            this.setState(prevState => {
+                return {
+                    filteredRecipes: prevState.recipes.filter(val => {
+                        return val.name.toLowerCase().includes(prevState.nameFilter.toLowerCase()) &&
+                            val.type.includes(prevState.typeFilter) &&
+                            this.keywordsFilter(val);
+                    })
+                }
+            });
+        }
+    }
+
+    keywordsFilter = (recipe) => {
+        if (!recipe.keywords) {
+            return false;
+        }
+
+        if (this.state.keywords === []) {
+            return true;
+        } else {
+            for (const keyword of this.state.keywords) {
+                if (!recipe.keywords.includes(keyword)) {
+                    return false;
+                }
             }
-        });
+        }
+
+        return true;
     }
 
     handleAddRecipeToDay = (recipeId) => {
@@ -116,12 +143,12 @@ class RecipeList extends React.Component {
     render() {
         return (
             <div className="m-2">
-                <Row>
-                    <Col lg={6}>
-                        <FormControl placeholder="Search" className="mb-1" onChange={this.handleFilterChange} name="nameFilter"/>
+                <Row className="mb-2">
+                    <Col lg={6} className="d-flex flex-column justify-content-end">
+                        <FormControl placeholder="Search" className="mt-1" onChange={this.handleFilterChange} name="nameFilter"/>
                     </Col>
-                    <Col lg={3}>
-                        <Form.Select onChange={this.handleFilterChange} name="typeFilter">
+                    <Col lg={3} className="d-flex flex-column justify-content-end">
+                        <Form.Select onChange={this.handleFilterChange} name="typeFilter" className="mt-1">
                             <option value="">All Recipe Types</option>
                             <option className="main-option" value="main">Main</option>
                             <option className="drink-option" value="drink">Drink</option>
@@ -130,7 +157,7 @@ class RecipeList extends React.Component {
                         </Form.Select>
                     </Col>
                     <Col lg={3}>
-                        {/*TODO: https://react-bootstrap.github.io/components/dropdowns/#custom-dropdown-components*/}
+                        <KeywordInput removePadding={true} placeholder="Keyword Filter" updateKeywords={this.updateKeywords}></KeywordInput>
                     </Col>
                 </Row>
                 {this.state.filteredRecipes.map((recipe) => {
