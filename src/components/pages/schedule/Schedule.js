@@ -1,7 +1,7 @@
 import React from "react";
 import ScheduleDay from "./ScheduleDay";
 import {Button, Col, Row} from "react-bootstrap";
-import {getWeekDayName, getMonthName} from "../../util/DateUtils";
+import {getWeekDayName, getMonthName} from "../../../util/DateUtils";
 
 
 class Schedule extends React.Component {
@@ -20,8 +20,6 @@ class Schedule extends React.Component {
             };
         });
     }
-
-
 
     render() {
         const date = new Date();

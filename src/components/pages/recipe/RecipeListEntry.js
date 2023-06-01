@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Col, Collapse, Modal, Row} from "react-bootstrap";
 import {get, ref, remove} from "firebase/database";
-import database from "../../firebase";
+import {database} from "../../../firebase";
 import AddRecipePopover from "./AddRecipePopover";
 
 /**

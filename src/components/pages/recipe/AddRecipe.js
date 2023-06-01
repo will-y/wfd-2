@@ -1,9 +1,8 @@
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import React from "react";
-import database from "../../firebase";
+import {database} from "../../../firebase";
 import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
-import Keyword from "./keyword/Keyword";
 import KeywordInput from "./keyword/KeywordInput";
 
 const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];

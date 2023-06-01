@@ -1,8 +1,8 @@
 import React from "react";
 import {Col, Row, Form, Table} from "react-bootstrap";
-import {datepickerStringToDateObject, getDateStringsBetween} from "../../util/DateUtils";
+import {datepickerStringToDateObject, getDateStringsBetween} from "../../../util/DateUtils";
 import {ref, onValue} from "firebase/database";
-import database from "../../firebase";
+import {database} from "../../../firebase";
 
 class IngredientList extends React.Component {
     constructor(props) {

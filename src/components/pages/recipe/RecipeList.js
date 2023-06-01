@@ -1,12 +1,12 @@
 import React from "react";
-import database from "../../firebase";
+import {database} from "../../../firebase";
 import {onValue, push, ref, set} from "firebase/database";
 import "./Recipe.css"
 import "../schedule/Schedule.css";
 import {Col, FormControl, Row, Form} from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
 import {Link} from "react-router-dom";
-import {sortRecipes} from "../../util/RecipeUtils";
+import {sortRecipes} from "../../../util/RecipeUtils";
 import KeywordInput from "./keyword/KeywordInput";
 
 /**
