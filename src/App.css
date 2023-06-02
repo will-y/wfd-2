@@ -10,3 +10,7 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.collection-select {
+    max-width: 200px;
+}

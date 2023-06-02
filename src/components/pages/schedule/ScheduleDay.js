@@ -21,7 +21,7 @@ class ScheduleDay extends React.Component {
     }
 
     componentDidMount() {
-        const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + this.state.dateString);
+        const scheduleRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule/${this.state.dateString}`);
         const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         get(recipesRef).then((snapshot) => {
@@ -74,10 +74,12 @@ class ScheduleDay extends React.Component {
                             {
                                 this.state.recipes.map(recipe => {
                                     return (<RecipeListEntry recipe={recipe}
-                                                             key={recipe.key} activeRecipes={this.state.activeRecipes}
+                                                             key={recipe.key}
+                                                             activeRecipes={this.state.activeRecipes}
                                                              edit={this.state.edit}
                                                              location="schedule"
-                                                             date={this.state.dateString}/>);
+                                                             date={this.state.dateString}
+                                                             collection={this.props.collection}/>);
                                 })
                             }
                         </Col>
@@ -86,7 +88,7 @@ class ScheduleDay extends React.Component {
                 <RecipeListPopover show={this.state.modalShow}
                                    onHide={() => this.setState({modalShow: false})}
                                    date={this.state.dateString}
-                                   location="schedule-add"/>
+                                   location="schedule-add" collection={this.props.collection}/>
                 <Button variant="success"
                         className="add-recipe-button"
                         onClick={() => this.setState({modalShow: true})}>

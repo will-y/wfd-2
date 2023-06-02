@@ -44,7 +44,7 @@ export function RequireAuth(props) {
 
         setTimeout(() => {
             setShowLogin(true);
-        }, 300);
+        }, 1000);
     }, [navigate]);
 
     function signIn() {

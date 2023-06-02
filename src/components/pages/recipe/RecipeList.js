@@ -8,6 +8,9 @@ import RecipeListEntry from "./RecipeListEntry";
 import {Link} from "react-router-dom";
 import {sortRecipes} from "../../../util/RecipeUtils";
 import KeywordInput from "./keyword/KeywordInput";
+import withOutletContextWrapper from "../../wrappers/withOutletContextWrapper";
+
+
 
 /**
  * Inputs:
@@ -23,6 +26,7 @@ import KeywordInput from "./keyword/KeywordInput";
 class RecipeList extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
 
         this.state = {
             recipes: [],
@@ -32,6 +36,7 @@ class RecipeList extends React.Component {
     }
 
     componentDidMount() {
+        console.log('recipe list ' + this.props.collection);
         const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         onValue(recipeRef, (snapshot) => {
@@ -112,7 +117,7 @@ class RecipeList extends React.Component {
         // If it comes from a day, clicking can add
         if (this.props.date) {
             const date = this.props.date;
-            const scheduleDayRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + date);
+            const scheduleDayRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule/${date}`);
 
             const newEntryRef = push(scheduleDayRef);
 
@@ -168,7 +173,8 @@ class RecipeList extends React.Component {
                                          onClick={() => this.handleAddRecipeToDay(recipe.key)}
                                          location={this.props.location}
                                          edit={this.props.edit}
-                                         editRecipe={this.props.editRecipe}/>
+                                         editRecipe={this.props.editRecipe}
+                                         collection={this.props.collection}/>
                     );
                 })}
                 {this.state.filteredRecipes.length === 0 ?
@@ -189,4 +195,4 @@ class RecipeList extends React.Component {
     }
 }
 
-export default RecipeList;
+export default withOutletContextWrapper(RecipeList);

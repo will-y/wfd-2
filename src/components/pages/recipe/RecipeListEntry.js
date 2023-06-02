@@ -10,7 +10,7 @@ import AddRecipePopover from "./AddRecipePopover";
  * - `activeRecipes` (RecipeKey[]): List of active recipes to see if this recipe needs to be expanded or not
  * - `hideArrow` (boolean): Hide the expand arrow (blocks the recipe from being expanded) // TODO: rename
  * - `key` (RecipeKey): Unique key of the recipe
- * - `onClick` (function): Function that is called when entire recipe hedaer is clicked
+ * - `onClick` (function): Function that is called when entire recipe header is clicked
  * - `location` (string): String to determine certain behavior or the recipe. ("list" or "schedule")
  *      - list: delete will delete from database
  *      - schedule: delete will just remove from that day on the schedule
@@ -29,9 +29,10 @@ class RecipeListEntry extends React.Component {
     }
 
     handleDeleteRecipe = () => {
+        console.log('delete: ' + this.props.location);
         const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
         // All schedules
-        const schedulesRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule");
+        const schedulesRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule`);
 
         if (this.props.location === "list") {
             // This is to remove recipes overall
@@ -56,7 +57,7 @@ class RecipeListEntry extends React.Component {
                 });
             });
         } else if (this.props.location === "schedule") {
-            const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/" + this.props.date);
+            const scheduleRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule/${this.props.date}`);
 
             get(scheduleRef).then(snapshot => {
                 snapshot.forEach(childSnapshot => {

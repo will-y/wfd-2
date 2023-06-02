@@ -3,6 +3,7 @@ import {Col, Row, Form, Table} from "react-bootstrap";
 import {datepickerStringToDateObject, getDateStringsBetween} from "../../../util/DateUtils";
 import {ref, onValue} from "firebase/database";
 import {database} from "../../../firebase";
+import withOutletContextWrapper from "../../wrappers/withOutletContextWrapper";
 
 class IngredientList extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class IngredientList extends React.Component {
         if (this.validDates()) {
             const dates = getDateStringsBetween(this.state.startDate, this.state.endDate);
 
-            const scheduleRef = ref(database, process.env.REACT_APP_DATABASE + "/schedule/");
+            const scheduleRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule/`);
 
             onValue(scheduleRef, snapshot => {
                 if (snapshot.exists()) {
@@ -169,4 +170,4 @@ class IngredientList extends React.Component {
     }
 }
 
-export default IngredientList;
+export default withOutletContextWrapper(IngredientList);
