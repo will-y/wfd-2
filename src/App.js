@@ -1,28 +1,34 @@
 import './App.css';
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {Outlet} from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap';
 import Form from 'react-bootstrap/Form';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {auth, database} from "./firebase";
-import {get, ref} from "firebase/database";
+import {onValue, ref} from "firebase/database";
+import {AddCollection} from "./components/pages/other/AddCollection";
 
 function App() {
     const [collections, setCollections] = useState([]);
     const [selectedCollection, setSelectedCollection] = useState('');
+    const [addCollectionModal, setAddCollectionModal] = useState(false);
+
+    if (collections.length > 0 && selectedCollection === '') {
+        setSelectedCollection(collections[0]);
+    }
+
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (auth.currentUser) {
                 const collectionsRef = ref(database, process.env.REACT_APP_DATABASE + "/collections");
 
-                get(collectionsRef).then(snapshot => {
+                onValue(collectionsRef, snapshot => {
                     if (snapshot.exists()) {
                         const collections = Object.keys(snapshot.val());
+
                         if (collections.length > 0) {
                             setCollections(Object.keys(snapshot.val()));
-                            setSelectedCollection(collections[0]);
                         }
-
                     }
                 });
             }
@@ -60,12 +66,21 @@ function App() {
                               return <option name={collection} key={collection}>{collection}</option>
                           })}
                       </Form.Select>
+                      <Button variant="success"
+                              className="add-component-button"
+                              onClick={() => setAddCollectionModal(true)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                               className="bi bi-plus-lg" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                          </svg>
+                      </Button>
                   </Navbar.Collapse>
               </Container>
           </Navbar>
           <Container>
               <Outlet context={selectedCollection}/>
           </Container>
+          <AddCollection show={addCollectionModal} onHide={() => setAddCollectionModal(false)} />
       </div>
   );
 }

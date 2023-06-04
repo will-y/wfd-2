@@ -26,7 +26,6 @@ import withOutletContextWrapper from "../../wrappers/withOutletContextWrapper";
 class RecipeList extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
 
         this.state = {
             recipes: [],
@@ -36,7 +35,6 @@ class RecipeList extends React.Component {
     }
 
     componentDidMount() {
-        console.log('recipe list ' + this.props.collection);
         const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
         onValue(recipeRef, (snapshot) => {

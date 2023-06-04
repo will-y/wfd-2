@@ -14,3 +14,7 @@
 .collection-select {
     max-width: 200px;
 }
+
+.add-component-button {
+    margin-left: 10px;
+}

@@ -20,7 +20,18 @@ class ScheduleDay extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            this.updateSchedule();
+        }
+    }
+
     componentDidMount() {
+        this.updateSchedule();
+
+    }
+
+    updateSchedule() {
         const scheduleRef = ref(database, `${process.env.REACT_APP_DATABASE}/collections/${this.props.collection}/schedule/${this.state.dateString}`);
         const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
 
@@ -88,7 +99,8 @@ class ScheduleDay extends React.Component {
                 <RecipeListPopover show={this.state.modalShow}
                                    onHide={() => this.setState({modalShow: false})}
                                    date={this.state.dateString}
-                                   location="schedule-add" collection={this.props.collection}/>
+                                   location="schedule-add"
+                                   collection={this.props.collection}/>
                 <Button variant="success"
                         className="add-recipe-button"
                         onClick={() => this.setState({modalShow: true})}>
