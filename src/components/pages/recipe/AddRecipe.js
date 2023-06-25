@@ -20,7 +20,7 @@ class AddRecipeClass extends React.Component {
                 ingredients: this.props.recipe.ingredients ? this.props.recipe.ingredients : [],
                 steps: this.props.recipe.steps ? this.props.recipe.steps : [],
                 notes: this.props.recipe.notes ? this.props.recipe.notes : "",
-                keywords: this.props.recipe.keywords,
+                keywords: this.props.recipe.keywords ? this.props.keywords : [],
                 validated: false
             }
         } else {
@@ -100,13 +100,13 @@ class AddRecipeClass extends React.Component {
             if (!this.props.edit) {
                 const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
                 const newRecipeRef = push(recipesRef);
-
+                console.log(obj);
                 set(newRecipeRef, obj).then(() => {
                     this.props.navigate("/recipes");
                 });
             } else {
                 const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes/" + this.props.recipe.key);
-
+                console.log(obj);
                 set(recipeRef, obj).then(() => {
                     this.props.hideModal();
                 });
