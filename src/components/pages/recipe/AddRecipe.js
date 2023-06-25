@@ -5,7 +5,7 @@ import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
 import KeywordInput from "./keyword/KeywordInput";
 
-const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp"];
+const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp", "lbs"];
 
 class AddRecipeClass extends React.Component {
     constructor(props) {
@@ -100,13 +100,11 @@ class AddRecipeClass extends React.Component {
             if (!this.props.edit) {
                 const recipesRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes");
                 const newRecipeRef = push(recipesRef);
-                console.log(obj);
                 set(newRecipeRef, obj).then(() => {
                     this.props.navigate("/recipes");
                 });
             } else {
                 const recipeRef = ref(database, process.env.REACT_APP_DATABASE + "/recipes/" + this.props.recipe.key);
-                console.log(obj);
                 set(recipeRef, obj).then(() => {
                     this.props.hideModal();
                 });
