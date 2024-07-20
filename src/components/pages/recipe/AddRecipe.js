@@ -20,7 +20,7 @@ class AddRecipeClass extends React.Component {
                 ingredients: this.props.recipe.ingredients ? this.props.recipe.ingredients : [],
                 steps: this.props.recipe.steps ? this.props.recipe.steps : [],
                 notes: this.props.recipe.notes ? this.props.recipe.notes : "",
-                keywords: this.props.recipe.keywords ? this.props.keywords : [],
+                keywords: this.props.recipe.keywords ? this.props.recipe.keywords : [],
                 validated: false
             }
         } else {
