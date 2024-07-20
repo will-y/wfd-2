@@ -1,5 +1,5 @@
 import {auth, database, provider} from "../../firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import {Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {get, ref} from "firebase/database";

@@ -83,17 +83,21 @@ class RecipeList extends React.Component {
         } else {
             this.setState(prevState => {
                 return {
-                    filteredRecipes: prevState.recipes.filter(val => {
-                        return val.name.toLowerCase().includes(prevState.nameFilter.toLowerCase()) &&
-                            val.type.includes(prevState.typeFilter) &&
-                            this.keywordsFilter(val);
+                    filteredRecipes: prevState.recipes.filter(recipe => {
+                        return recipe.name.toLowerCase().includes(prevState.nameFilter.toLowerCase()) &&
+                            recipe.type.includes(prevState.typeFilter) &&
+                            this.keywordsFilter(recipe, prevState.keywords);
                     })
                 }
             });
         }
     }
 
-    keywordsFilter = (recipe) => {
+    keywordsFilter = (recipe, keywords) => {
+        if (keywords.length === 0) {
+           return true;
+        }
+
         if (!recipe.keywords) {
             return false;
         }
