@@ -43,7 +43,7 @@ class ScheduleDay extends React.Component {
                     if (snapshot2.exists()) {
                         const schedule = snapshot2.val();
                         this.setState({
-                            recipes: sortRecipes(this.getRecipes(recipes, schedule))
+                            recipes: sortRecipes(this.getRecipes(recipes, schedule), this.props.recipeTypes)
                         });
                     } else {
                         this.setState({

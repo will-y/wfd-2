@@ -49,18 +49,20 @@ class RecipeList extends React.Component {
                     });
                 }
 
-                dataList = sortRecipes(dataList);
+                // TODO: This is bad, maybe make recipe types and units global with contexts?
+                getRecipeTypes((newRecipeTypes) => {
+                    const sortedRecipes = sortRecipes(dataList, newRecipeTypes);
 
-                this.setState({
-                    recipes: dataList,
-                    filteredRecipes: JSON.parse(JSON.stringify(dataList)),
-                    nameFilter: "",
-                    typeFilter: ""
+                    this.setState({
+                        recipes: sortedRecipes,
+                        filteredRecipes: JSON.parse(JSON.stringify(sortedRecipes)),
+                        nameFilter: "",
+                        typeFilter: "",
+                        recipeTypes: newRecipeTypes
+                    });
                 });
             }
         });
-
-        getRecipeTypes((newRecipeTypes) => this.setState({ recipeTypes: newRecipeTypes}));
     }
 
     handleFilterChange = (event) => {

@@ -3,6 +3,9 @@
 This app is for keeping track of recipes and eating schedules.
 
 ## Release Notes
+#### 1.1.1
+- Fixes recipe sorting
+
 ### 1.1.0
 - Fixes search by name on the recipe screen
 - Adds an admin screen to add units and recipe types
