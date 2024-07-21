@@ -16,6 +16,7 @@ import AddRecipePopover from "./AddRecipePopover";
  *      - schedule: delete will just remove from that day on the schedule
  * - `edit` (boolean): If the delete button shows up?
  * - `editRecipe (boolean): If the edit recipe button shows up
+ * - `color` (hex color code): Color of the recipe entry
  */
 class RecipeListEntry extends React.Component {
     constructor(props) {
@@ -84,7 +85,9 @@ class RecipeListEntry extends React.Component {
 
         return (
             <>
-                <div className={`recipe-list-instance mb-2 ps-4 pe-4 ${!this.props.hideArrow ? "pt-3" : ""} pb-2 app-card ${recipe.type}`} onClick={this.props.onClick}>
+                <div className={`recipe-list-instance mb-2 ps-4 pe-4 ${!this.props.hideArrow ? "pt-3" : ""} pb-2 app-card ${recipe.type}`}
+                     style={{boxShadow: `0 0 30px 2px ${this.props.color} inset, 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`}}
+                     onClick={this.props.onClick}>
                     <Row onClick={this.toggleExpansion} className={`cursor-pointer ${!this.props.hideArrow ? "header-row" : ""}`}>
                         <Col xs={5}>
                             <p className="mb-0 fw-bold">{recipe.name}</p>

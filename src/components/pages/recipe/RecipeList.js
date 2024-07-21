@@ -6,11 +6,10 @@ import "../schedule/Schedule.css";
 import {Col, FormControl, Row, Form} from "react-bootstrap";
 import RecipeListEntry from "./RecipeListEntry";
 import {Link} from "react-router-dom";
-import {sortRecipes} from "../../../util/RecipeUtils";
+import {getRecipeColor, sortRecipes} from "../../../util/RecipeUtils";
 import KeywordInput from "./keyword/KeywordInput";
 import withOutletContextWrapper from "../../wrappers/withOutletContextWrapper";
-
-
+import {getRecipeTypes} from "../../../service/AdminServices";
 
 /**
  * Inputs:
@@ -30,7 +29,8 @@ class RecipeList extends React.Component {
         this.state = {
             recipes: [],
             filteredRecipes: [],
-            keywords: []
+            keywords: [],
+            recipeTypes: []
         }
     }
 
@@ -59,6 +59,8 @@ class RecipeList extends React.Component {
                 });
             }
         });
+
+        getRecipeTypes((newRecipeTypes) => this.setState({ recipeTypes: newRecipeTypes}));
     }
 
     handleFilterChange = (event) => {
@@ -157,10 +159,10 @@ class RecipeList extends React.Component {
                     <Col lg={3} className="d-flex flex-column justify-content-end">
                         <Form.Select onChange={this.handleFilterChange} name="typeFilter" className="mt-1">
                             <option value="">All Recipe Types</option>
-                            <option className="main-option" value="main">Main</option>
-                            <option className="drink-option" value="drink">Drink</option>
-                            <option className="side-option" value="side">Side</option>
-                            <option className="dessert-option" value="dessert">Dessert</option>
+                            {this.state.recipeTypes.map(recipeType =>
+                                <option key={recipeType.key} value={recipeType.key} style={{backgroundColor: recipeType.color}}>
+                                    {recipeType.name}
+                                </option>)}
                         </Form.Select>
                     </Col>
                     <Col lg={3}>
@@ -176,7 +178,8 @@ class RecipeList extends React.Component {
                                          location={this.props.location}
                                          edit={this.props.edit}
                                          editRecipe={this.props.editRecipe}
-                                         collection={this.props.collection}/>
+                                         collection={this.props.collection}
+                                         color={getRecipeColor(this.state.recipeTypes, recipe.type)}/>
                     );
                 })}
                 {this.state.filteredRecipes.length === 0 ?

@@ -16,6 +16,7 @@ export function RequireAuth(props) {
         </>;
 
     const [authed, setAuthed] = useState(auth.currentUser !== null);
+    const [isAdmin, setAdmin] = useState(false);
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -30,6 +31,7 @@ export function RequireAuth(props) {
                             navigate('no-access');
                         } else {
                             setAuthed(true);
+                            setAdmin(snapshot.val() === 'admin');
                         }
                     }, () => {
                         console.log('in error handler')
@@ -55,10 +57,10 @@ export function RequireAuth(props) {
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential.accessToken;
                 // // The signed-in user info.
-                // const user = result.user;
+                const user = result.user;
                 // console.log(credential);
                 // console.log(token);
-                // console.log(user);
+                console.log(user);
 
             }).catch((error) => {
             // Handle Errors here.
@@ -66,5 +68,13 @@ export function RequireAuth(props) {
         });
     }
 
-    return !authed ? (showLogin ? noAccessComponent : <></>) : props.children;
+    if (authed) {
+        if (props.requiresAdmin) {
+            return isAdmin ? props.children : noAccessComponent;
+        } else {
+            return props.children;
+        }
+    } else {
+        return showLogin ? noAccessComponent : <></>;
+    }
 }

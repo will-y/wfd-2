@@ -1,13 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useOutletContext } from "react-router-dom";
 import ScheduleDay from "./ScheduleDay";
 import {Button, Col, Row} from "react-bootstrap";
 import {getWeekDayName, getMonthName} from "../../../util/DateUtils";
+import {getRecipeTypes} from "../../../service/AdminServices";
 
 export default function Schedule() {
     const [days, setDays] = useState(7);
+    const [recipeTypes, setRecipeTypes] = useState([]);
 
     const selectedCollection = useOutletContext();
+
+    useEffect(() => {
+        getRecipeTypes(setRecipeTypes);
+    }, []);
 
     const handleLoadDays = () => {
         setDays(prevDays => {
@@ -27,7 +33,8 @@ export default function Schedule() {
                                          date={newDate.getDate()}
                                          month={getMonthName(newDate.getMonth())}
                                          year={newDate.getFullYear()}
-                                         collection={selectedCollection}/>
+                                         collection={selectedCollection}
+                                         recipeTypes={recipeTypes}/>
                         </Col>
                     );
                 })

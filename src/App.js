@@ -5,13 +5,15 @@ import {LinkContainer} from 'react-router-bootstrap';
 import Form from 'react-bootstrap/Form';
 import React, {useEffect, useState} from "react";
 import {auth, database} from "./firebase";
-import {onValue, ref} from "firebase/database";
+import {get, onValue, ref} from "firebase/database";
 import {AddCollection} from "./components/pages/other/AddCollection";
 
 function App() {
     const [collections, setCollections] = useState([]);
     const [selectedCollection, setSelectedCollection] = useState('');
     const [addCollectionModal, setAddCollectionModal] = useState(false);
+    // TODO: Duplicated logic with RequireAuth
+    const [isAdmin, setAdmin] = useState(false);
 
     if (collections.length > 0 && selectedCollection === '') {
         setSelectedCollection(collections[0]);
@@ -29,6 +31,17 @@ function App() {
                         if (collections.length > 0) {
                             setCollections(Object.keys(snapshot.val()));
                         }
+                    }
+                });
+            }
+
+            // Set Role
+            if (user !== null) {
+                const userRef = ref(database, "/users/" + user.uid);
+
+                get(userRef).then(snapshot => {
+                    if (snapshot.exists()) {
+                        setAdmin(snapshot.val() === 'admin');
                     }
                 });
             }
@@ -57,6 +70,12 @@ function App() {
                           <LinkContainer to="/ingredient-list">
                               <Nav.Link>Ingredient List</Nav.Link>
                           </LinkContainer>
+                          {isAdmin ?
+                              <LinkContainer to="/admin-controls">
+                                  <Nav.Link>Admin Controls</Nav.Link>
+                              </LinkContainer> :
+                              <>/</>
+                          }
                       </Nav>
                       <Form.Select aria-label="Default select example"
                                    className='collection-select'

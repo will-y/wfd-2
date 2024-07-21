@@ -4,7 +4,7 @@ import {Button, Col, FormCheck, Row} from "react-bootstrap";
 import RecipeListPopover from "../recipe/RecipeListPopover";
 import {onValue, ref, get} from "firebase/database";
 import RecipeListEntry from "../recipe/RecipeListEntry";
-import {sortRecipes} from "../../../util/RecipeUtils";
+import {getRecipeColor, sortRecipes} from "../../../util/RecipeUtils";
 import {database} from "../../../firebase";
 
 class ScheduleDay extends React.Component {
@@ -90,7 +90,8 @@ class ScheduleDay extends React.Component {
                                                              edit={this.state.edit}
                                                              location="schedule"
                                                              date={this.state.dateString}
-                                                             collection={this.props.collection}/>);
+                                                             collection={this.props.collection}
+                                                             color={getRecipeColor(this.props.recipeTypes, recipe.type)}/>);
                                 })
                             }
                         </Col>

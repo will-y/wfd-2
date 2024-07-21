@@ -12,6 +12,7 @@ import RecipeList from "./components/pages/recipe/RecipeList";
 import IngredientList from "./components/pages/ingredients/IngredientList";
 import {RequireAuth} from "./components/wrappers/RequireAuth";
 import {NoAccess} from "./components/pages/other/NoAccess";
+import {AdminControls} from "./components/pages/admin/adminControls";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +23,7 @@ root.render(
               <Route path="add" element={<RequireAuth path="add"><AddRecipe /></RequireAuth>}/>
               <Route path="recipes" element={<RequireAuth path="recipes"><RecipeList location="list" edit={true} editRecipe={true}/></RequireAuth>}/>
               <Route path="ingredient-list" element={<RequireAuth path="ingredient-list"><IngredientList /></RequireAuth>}/>
+              <Route path="admin-controls" element={<RequireAuth path="ingredient-list" requiresAdmin={true}><AdminControls /></RequireAuth>}/>
               <Route path="no-access" element={<NoAccess />}/>
           </Route>
       </Routes>

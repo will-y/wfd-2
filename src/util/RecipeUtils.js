@@ -5,7 +5,7 @@ const categoryOrder = {
     "dessert": 3
 }
 
-const sortRecipes = (recipes) => {
+export const sortRecipes = (recipes) => {
     const recipesCopy = JSON.parse(JSON.stringify(recipes));
 
     recipesCopy.sort((a, b) => {
@@ -21,4 +21,12 @@ const sortRecipes = (recipes) => {
     return recipesCopy;
 }
 
-export { sortRecipes };
+export const getRecipeColor = (recipeTypes, recipeTypeKey) => {
+    for (let i = 0; i < recipeTypes.length; i++) {
+        if (recipeTypes[i].key === recipeTypeKey) {
+            return recipeTypes[i].color;
+        }
+    }
+
+    return "#FFFFFF66";
+}

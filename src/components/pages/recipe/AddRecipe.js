@@ -4,8 +4,7 @@ import {database} from "../../../firebase";
 import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
 import KeywordInput from "./keyword/KeywordInput";
-
-const units = ["#", "cups", "grams", "ounces", "fl ounces", "tsp", "tbsp", "lbs"];
+import {getRecipeTypes, getUnits} from "../../../service/AdminServices";
 
 class AddRecipeClass extends React.Component {
     constructor(props) {
@@ -21,7 +20,9 @@ class AddRecipeClass extends React.Component {
                 steps: this.props.recipe.steps ? this.props.recipe.steps : [],
                 notes: this.props.recipe.notes ? this.props.recipe.notes : "",
                 keywords: this.props.recipe.keywords ? this.props.recipe.keywords : [],
-                validated: false
+                validated: false,
+                units: [],
+                recipeTypes: []
             }
         } else {
             this.state = {
@@ -33,9 +34,25 @@ class AddRecipeClass extends React.Component {
                 steps: [""],
                 notes: "",
                 keywords: [],
-                validated: false
+                validated: false,
+                units: [],
+                recipeTypes: []
             }
         }
+    }
+
+    componentDidMount() {
+        getUnits((units) => {
+            this.setState({
+                units: units.map(unit => unit.name)
+            });
+        });
+
+        getRecipeTypes((recipeTypes) => {
+            this.setState({
+               recipeTypes: recipeTypes
+            });
+        });
     }
 
     handleInputChange = (event) => {
@@ -141,10 +158,10 @@ class AddRecipeClass extends React.Component {
                         <Col md={6}>
                             <FloatingLabel label="Type" className="mb-3">
                                 <Form.Select name="type" onChange={this.handleInputChange} value={this.state.type} required>
-                                    <option value="main">Main Course</option>
-                                    <option value="side">Side Item</option>
-                                    <option value="dessert">Dessert</option>
-                                    <option value="drink">Drink</option>
+                                    {this.state.recipeTypes.map(recipeType =>
+                                        <option key={recipeType.key} value={recipeType.key}>
+                                            {recipeType.name}
+                                        </option>)}
                                 </Form.Select>
                             </FloatingLabel>
                         </Col>
@@ -208,7 +225,7 @@ class AddRecipeClass extends React.Component {
                                                          onChange={(event) => this.handleInputChangeIngredient(event, index)}
                                                          required value={this.state.ingredients[index].unit}>
                                                 {
-                                                    units.map((unit) =>
+                                                    this.state.units.map((unit) =>
                                                         <option key={`${index}-${unit}`} value={unit}>{unit}</option>
                                                     )
                                                 }
