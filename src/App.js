@@ -74,7 +74,7 @@ function App() {
                               <LinkContainer to="/admin-controls">
                                   <Nav.Link>Admin Controls</Nav.Link>
                               </LinkContainer> :
-                              <>/</>
+                              <></>
                           }
                       </Nav>
                       <Form.Select aria-label="Default select example"
