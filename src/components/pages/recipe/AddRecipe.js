@@ -5,6 +5,7 @@ import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
 import KeywordInput from "./keyword/KeywordInput";
 import {getRecipeTypes, getUnits} from "../../../service/AdminServices";
+import {getRecipe} from "../../../service/WebScrapingService";
 
 class AddRecipeClass extends React.Component {
     constructor(props) {
@@ -22,7 +23,8 @@ class AddRecipeClass extends React.Component {
                 keywords: this.props.recipe.keywords ? this.props.recipe.keywords : [],
                 validated: false,
                 units: [],
-                recipeTypes: []
+                recipeTypes: [],
+                url: ''
             }
         } else {
             this.state = {
@@ -36,7 +38,8 @@ class AddRecipeClass extends React.Component {
                 keywords: [],
                 validated: false,
                 units: [],
-                recipeTypes: []
+                recipeTypes: [],
+                url: ''
             }
         }
     }
@@ -133,6 +136,14 @@ class AddRecipeClass extends React.Component {
         return (
             <>
                 <h3>Recipe Info</h3>
+                <FloatingLabel label="Import From URL" className="mb-3">
+                    <Form.Control type="text"
+                                  placeholder="url"
+                                  name="url"
+                                  onChange={this.handleInputChange}
+                                  value={this.state.url} />
+                </FloatingLabel>
+                <Button onClick={() => getRecipe(this.state.url)}>Import</Button>
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleAddRecipe} className="mt-3">
                     <Row>
                         <Col md={6}>
