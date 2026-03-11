@@ -5,7 +5,7 @@ import { ref, push, set } from "firebase/database";
 import {useNavigate} from "react-router-dom";
 import KeywordInput from "./keyword/KeywordInput";
 import {getRecipeTypes, getUnits} from "../../../service/AdminServices";
-import {getRecipe} from "../../../service/WebScrapingService";
+import {parseRecipe} from "../../../service/RecipeServices";
 
 class AddRecipeClass extends React.Component {
     constructor(props) {
@@ -132,18 +132,43 @@ class AddRecipeClass extends React.Component {
         }
     }
 
+    handleParseRecipe = () => {
+        this.setState({
+            parseLoading: true
+        });
+
+        parseRecipe(this.state.url).then((result) => {
+            const recipe = result.data;
+
+            this.setState({
+                source: recipe.source,
+                ingredients: recipe.ingredients,
+                steps: recipe.steps,
+                parseLoading: false
+            });
+        });
+    }
+
     render = () => {
         return (
             <>
                 <h3>Recipe Info</h3>
-                <FloatingLabel label="Import From URL" className="mb-3">
-                    <Form.Control type="text"
-                                  placeholder="url"
-                                  name="url"
-                                  onChange={this.handleInputChange}
-                                  value={this.state.url} />
-                </FloatingLabel>
-                <Button onClick={() => getRecipe(this.state.url)}>Import</Button>
+                <Row>
+                    <Col md={9}>
+                        <FloatingLabel label="Import From URL" className="mb-3">
+                            <Form.Control type="text"
+                                          placeholder="url"
+                                          name="url"
+                                          onChange={this.handleInputChange}
+                                          value={this.state.url} required/>
+                        </FloatingLabel>
+                    </Col>
+                    <Col md={3}>
+                        <Button variant="primary" className="w-100 h-75" onClick={this.handleParseRecipe} disabled={this.state.parseLoading}>
+                            Import
+                        </Button>
+                    </Col>
+                </Row>
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleAddRecipe} className="mt-3">
                     <Row>
                         <Col md={6}>

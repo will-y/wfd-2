@@ -3,7 +3,10 @@
 This app is for keeping track of recipes and eating schedules.
 
 ## Release Notes
-#### 1.1.1
+### 1.2.0
+- Adds option to parse recipe from url
+
+### 1.1.1
 - Fixes recipe sorting
 
 ### 1.1.0
